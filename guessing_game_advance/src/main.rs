@@ -1,4 +1,4 @@
-use std::io;
+use std::{cmp::Ordering, io};
 // 使用了外部的rand crate
 // Rng是一个trait(特征) 如果想使用随机生成器的方法 则必须在trait的作用域中
 use rand::Rng;
@@ -23,6 +23,15 @@ fn main() {
     io::stdin()
         .read_line(&mut guess)
         .expect("Failed to read line!");
+
+    // 将guess转为数字类型
+    let guess: u32 = guess.trim().parse().expect("Please type a number!");
+
+    match guess.cmp(&secret_number) {
+        Ordering::Less => println!("Too small!"),
+        Ordering::Greater => println!("Too big!"),
+        Ordering::Equal => println!("You win!"),
+    }
 
     println!("You guessed: {guess}")
 }
