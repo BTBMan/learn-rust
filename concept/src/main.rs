@@ -85,4 +85,122 @@ fn main() {
     // let x = num(1);
 
     // println!("x is {x}")
+
+    // 控制流(if ifelse loop while for)
+
+    // let num = 3;
+    // if num < 4 {
+    //     println!("3 is less that 4!")
+    // }
+
+    // error 条件必须是bool值
+    // if num {
+    //     println!("true")
+    // }
+
+    // if num != 0 {
+    //     println!("num is not equal to 0")
+    // }
+
+    // ifelse
+    // if num % 4 == 0 {
+    //     println!("num is divisible by 4")
+    // } else if num % 3 == 0 {
+    //     println!("num is divisible by 3")
+    // }
+
+    // let中使用if
+    // let condition = true;
+    // let is_hundred = true;
+    // let number = if condition { 5 } else { 6 }; // 返回值必须是相同的类型
+    //                                             // let中的ifelse
+    // let number_2 = if !condition {
+    //     5
+    // } else if is_hundred {
+    //     100
+    // } else {
+    //     6
+    // };
+
+    // println!("number is {number}");
+    // println!("number_2 is {number_2}");
+
+    // loop循环
+    // loop {
+    //     println!("again!")
+    // }
+
+    // continue 和 break
+    // let mut count = 0;
+    // loop {
+    //     count += 1;
+
+    //     if count == 5 {
+    //         continue; // 跳出当前迭代
+    //     }
+
+    //     if count == 10 {
+    //         break; // 跳出这个循环
+    //     }
+
+    //     println!("count is {count}"); // 不会打印出5和10
+    // }
+
+    // loop中的返回值
+    // let mut count = 0;
+    // let result = loop {
+    //     // 通过变量接收返回值
+    //     count += 1;
+
+    //     if count == 5 {
+    //         break count * 2; // break后加要返回的值
+    //     }
+    // };
+
+    // println!("result is {result}")
+
+    // 循环标签
+    // let mut count = 0;
+
+    // // 标记loop标签 注意'号
+    // 'first_level_loop: loop {
+    //     println!("count is {count}");
+    //     let mut in_loop_count = 0;
+
+    //     loop {
+    //         println!("in_loop_count: {in_loop_count}");
+
+    //         if in_loop_count == 2 {
+    //             break;
+    //         }
+
+    //         if count == 2 {
+    //             break 'first_level_loop; // 结束标记为'first_level_loop的循环
+    //         }
+
+    //         in_loop_count += 1;
+    //     }
+
+    //     count += 1;
+    // }
+
+    // while循环
+    // let mut count = 1;
+
+    // while count < 3 {
+    //     println!("count is {count}");
+
+    //     count += 1;
+    // }
+
+    // for循环
+    // let list = [1, 2, 3, 4, 5];
+    // for number in list {
+    //     println!("the value is {number}");
+    // }
+
+    // 使用for遍历集合中的元素
+    // for number in (1..4).rev() {
+    //     println!("{number}")
+    // }
 }
