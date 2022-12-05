@@ -59,4 +59,30 @@ fn main() {
     // println!("{}", a[0]);
     // println!("{}", b[0]);
     // println!("{}", c[0]);
+
+    // 函数
+    // fn another_function(x: i32) {
+    //     println!("x is {x}")
+    // }
+
+    // another_function(12)
+
+    // 块表达式
+    // let a = {
+    //     let b = 1;
+    //     b + 1 // 注意不要写分号, 没有分号是表达式, 有返回值, 有分号则是语句, 不会有返回值.
+    // };
+    // println!("a is {a}");
+
+    // 函数的返回值
+    // fn num(x: i32) -> i32 {
+    //     5 + x // 直接指定值(结尾不可以带分号)
+    // }
+    // fn num(x: i32) -> i32 {
+    //     return 5 + x; // 使用return关键字(结尾有分号)
+    // }
+
+    // let x = num(1);
+
+    // println!("x is {x}")
 }
