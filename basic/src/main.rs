@@ -115,4 +115,44 @@ fn main() {
 
     //     println!("{}", longer_delimiter);
     // }
+    // 结构体
+    {
+        // 创建结构体
+        #[derive(Debug)]
+        struct User {
+            name: String,
+            age: u64,
+            active: bool,
+        }
+
+        // 创建结构体实例
+        // If you wanna change the value, you must to change the variable to be mutable.
+        let mut user1 = User {
+            active: true,
+            age: 18,
+            name: String::from("Bob"),
+        };
+
+        // Just like javascript (es6) ... operation.
+        let user2 = User {
+            name: String::from("Sun"),
+            active: false,
+            ..user1 // 结构更新语法在最后面
+        };
+
+        // let user3 = User {
+        //     name: user2.name, // 这么做 user2 的 name 会失去所有权
+        //     ..user2
+        // };
+
+        change_name(&mut user1, &"Kevin");
+
+        fn change_name(user: &mut User, name: &str) {
+            user.name = name.to_string();
+        }
+
+        println!("{:?}", user1);
+        println!("{:?}", user2);
+        // println!("{:?}", user3);
+    }
 }
