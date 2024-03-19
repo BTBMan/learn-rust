@@ -330,6 +330,16 @@ fn main() {
             //     if let Some(3) = v {
             //         println!("3");
             //     }
+
+            //     // 这里 x 为变量 (?可以理解为形参吗)
+            //     if let Some(x) = v {
+            //         println!("3, {x}");
+            //     }
+
+            //     let y = 4;
+            //     if let Some(y) = v {
+            //         println!("3, {y}");
+            //     }
             // }
             // matches!宏 直接返回 true 或 false
             // {
@@ -344,6 +354,36 @@ fn main() {
             //     println!("{res2}");
             // }
             // 无论是match还是if let都会发生变量遮蔽 语句中的变量会遮蔽上层变量
+            // 结构 Option
+            // {
+            //     fn plus_one(x: Option<i32>) -> Option<i32> {
+            //         match x {
+            //             None => None,
+            //             Some(x) => Some(x + 1),
+            //         }
+            //     }
+
+            //     let v1 = Some(5);
+            //     let v2 = plus_one(v1);
+            //     let v3 = plus_one(None);
+
+            //     println!("{:?},{:?},{:?}", v1, v2, v3);
+            // }
+            // while let
+            // {
+            //     // Vec是动态数组
+            //     let mut stack = Vec::new();
+
+            //     // 向数组尾部插入元素
+            //     stack.push(1);
+            //     stack.push(2);
+            //     stack.push(3);
+
+            //     // stack.pop从数组尾部弹出元素
+            //     while let Some(top) = stack.pop() {
+            //         println!("{}", top);
+            //     }
+            // }
         }
     }
 }
