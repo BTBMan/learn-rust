@@ -272,5 +272,78 @@ fn main() {
         //     //     }
         //     // }
         // }
+        // match
+        {
+            // match
+            // {
+            //     // {
+            //     //     enum Type {
+            //     //         Input,
+            //     //         Button,
+            //     //         Checkbox,
+            //     //         Radio,
+            //     //     };
+
+            //     //     let input = Type::Input;
+
+            //     //     // 每条模式分支的返回值类型必须一致
+            //     //     // match 本身也是表达式 所以他的返回值可以赋值给其他变量 这里返回了一个单元类型
+            //     //     let res = match input {
+            //     //         Type::Button => println!("Button"),
+            //     //         // xxx 或 xxx
+            //     //         Type::Input | Type::Radio => {
+            //     //             println!("Input or Radio");
+            //     //         }
+            //     //         _ => println!("Checkbox"), // 其他情况
+            //     //     };
+
+            //     //     println!("{:?}", res); // ()
+            //     // }
+            //     // 模式绑定
+            //     // {
+            //     //     // 在模式中取出绑定的值
+            //     //     #[derive(Debug)]
+            //     //     enum Shape {
+            //     //         Circle,
+            //     //         Rect,
+            //     //     }
+
+            //     //     enum Type {
+            //     //         Input,
+            //     //         Button(Shape),
+            //     //     }
+
+            //     //     let button = Type::Button(Shape::Rect);
+
+            //     //     match button {
+            //     //         Type::Button(shape) => {
+            //     //             println!("{:?}", shape)
+            //     //         }
+            //     //         _ => println!("Input"),
+            //     //     }
+            //     // }
+            // }
+            // if let 只匹配一个条件时使用
+            // {
+            //     let v = Some(3);
+
+            //     if let Some(3) = v {
+            //         println!("3");
+            //     }
+            // }
+            // matches!宏 直接返回 true 或 false
+            // {
+            //     let foo = 'A';
+            //     let res1 = matches!(foo, 'a'..='z' | 'A'..='Z');
+
+            //     println!("{res1}");
+
+            //     let bar = Some(4);
+            //     let res2 = matches!(bar, Some(x) if x > 2);
+
+            //     println!("{res2}");
+            // }
+            // 无论是match还是if let都会发生变量遮蔽 语句中的变量会遮蔽上层变量
+        }
     }
 }
