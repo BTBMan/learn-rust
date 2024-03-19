@@ -424,6 +424,61 @@ fn main() {
             //         Point { x: _, y: __ } => println!("not matched anything"),
             //     }
             // }
+            // construct nested enum
+            // {
+            //     enum ColorType {
+            //         Rgb(i32, i32, i32),
+            //         Hsv(i32, i32, i32),
+            //     }
+
+            //     enum Med {
+            //         ChangeColor(ColorType),
+            //         Move,
+            //     }
+
+            //     let ins = Med::ChangeColor(ColorType::Rgb(1, 2, 3));
+            //     // let ins = Med::ChangeColor(ColorType::Hsv(1, 2, 3));
+
+            //     match ins {
+            //         Med::ChangeColor(ColorType::Rgb(_, __, ___)) => println!("change color"),
+            //         _ => println!("not"),
+            //     }
+            // }
+            // 解构嵌套的元祖和结构体
+            // {
+            //     #[derive(Debug)]
+            //     struct Point {
+            //         x: i32,
+            //         y: i32,
+            //         color: Color,
+            //     }
+
+            //     #[derive(Debug)]
+            //     struct Color {
+            //         rgb: (i32, i32, i32),
+            //     }
+
+            //     // let (a, b) = ((1, 3), Point { x: 4, y: 10 });
+            //     let (
+            //         (a, b),
+            //         Point {
+            //             x,
+            //             y,
+            //             color: Color { rgb: (aa, bb, cc) },
+            //         },
+            //     ) = (
+            //         (1, 3),
+            //         Point {
+            //             x: 4,
+            //             y: 10,
+            //             color: Color { rgb: (11, 22, 33) },
+            //         },
+            //     );
+            //     println!(
+            //         "{:?}, {:?}, {:?}, {:?}, {:?},{:?},{:?}",
+            //         a, b, x, y, aa, bb, cc
+            //     );
+            // }
         }
     }
 }
