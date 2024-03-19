@@ -384,6 +384,46 @@ fn main() {
             //         println!("{}", top);
             //     }
             // }
+            // 匹配范围
+            // {
+            //     let x1 = 5;
+
+            //     match x1 {
+            //         1..=5 => println!("matched"),
+            //         _ => println!("not matched")
+            //     }
+            // }
+            // construction
+            // {
+            //     struct Point {
+            //         x: i32,
+            //         y: i32,
+            //     }
+
+            //     let p = Point { x: 3, y: 4 };
+
+            //     let Point { x, y } = p;
+            //     println!("{x}, {y}");
+
+            //     // variable alias
+            //     let Point { x: x1, y: y1 } = p;
+            //     println!("{x1}, {y1}");
+            // }
+            // 匹配结构体
+            // {
+            //     struct Point {
+            //         x: i32,
+            //         y: i32,
+            //     }
+
+            //     let p = Point { x: 1, y: 9 };
+
+            //     match p {
+            //         Point { x: 1, y } => println!("matched x = 1, y is {y}"), // 只匹配 x
+            //         Point { x: _, y: 2 } => println!("matched y = 2"),        // 只匹配 y
+            //         Point { x: _, y: __ } => println!("not matched anything"),
+            //     }
+            // }
         }
     }
 }
