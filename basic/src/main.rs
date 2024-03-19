@@ -117,42 +117,108 @@ fn main() {
     // }
     // 结构体
     {
-        // 创建结构体
-        #[derive(Debug)]
-        struct User {
-            name: String,
-            age: u64,
-            active: bool,
-        }
+        // {
+        //     // 创建结构体
+        //     #[derive(Debug)]
+        //     struct User {
+        //         name: String,
+        //         age: u64,
+        //         active: bool,
+        //     }
 
-        // 创建结构体实例
-        // If you wanna change the value, you must to change the variable to be mutable.
-        let mut user1 = User {
-            active: true,
-            age: 18,
-            name: String::from("Bob"),
-        };
+        //     // 创建结构体实例
+        //     // If you wanna change the value, you must to change the variable to be mutable.
+        //     let mut user1 = User {
+        //         active: true,
+        //         age: 18,
+        //         name: String::from("Bob"),
+        //     };
 
-        // Just like javascript (es6) ... operation.
-        let user2 = User {
-            name: String::from("Sun"),
-            active: false,
-            ..user1 // 结构更新语法在最后面
-        };
+        //     // Just like javascript (es6) ... operation.
+        //     let user2 = User {
+        //         name: String::from("Sun"),
+        //         active: false,
+        //         ..user1 // 结构更新语法在最后面
+        //     };
 
-        // let user3 = User {
-        //     name: user2.name, // 这么做 user2 的 name 会失去所有权
-        //     ..user2
-        // };
+        //     // let user3 = User {
+        //     //     name: user2.name, // 这么做 user2 的 name 会失去所有权
+        //     //     ..user2
+        //     // };
 
-        change_name(&mut user1, &"Kevin");
+        //     change_name(&mut user1, &"Kevin");
 
-        fn change_name(user: &mut User, name: &str) {
-            user.name = name.to_string();
-        }
+        //     fn change_name(user: &mut User, name: &str) {
+        //         user.name = name.to_string();
+        //     }
 
-        println!("{:?}", user1);
-        println!("{:?}", user2);
-        // println!("{:?}", user3);
+        //     println!("{:?}", user1);
+        //     println!("{:?}", user2);
+        //     // println!("{:?}", user3);
+        // }
+
+        // 元祖结构体
+        // {
+        //     #[derive(Debug)]
+        //     struct Color(i32, i32, char);
+
+        //     let c = Color(1, 2, 'a');
+
+        //     println!("{:?}", c);
+        //     dbg!(&c);
+        // }
+        // 单元结构体
+        // {
+        //     #[derive(Debug)]
+        //     struct AB; // 定义了一个单元体(啥也没有)的结构体
+
+        //     let a = AB;
+
+        //     println!("{:?}", a)
+        // }
+        // {
+        //     #[derive(Debug)]
+        //     struct Shape {
+        //         width: i32,
+        //         height: i32,
+        //     }
+
+        //     let rect = Shape {
+        //         width: 3,
+        //         height: 5,
+        //     };
+
+        //     dbg!(&rect);
+        // }
+        // 结构体内避免使用引用类型标注 编译器会报错 如果使用引用 则必加上用生命周期
+        // 枚举
+        // {
+        //     #[derive(Debug)]
+        //     enum Type {
+        //         Input(u8), // 类型也可以省略
+        //         Checkbox { a: char },
+        //         Radio(bool),
+        //     }
+
+        //     let input = Type::Input(1);
+        //     let checkbox = Type::Checkbox { a: 'a' };
+        //     let radio = Type::Radio(true);
+
+        //     println!("{:?},{:?},{:?}", input, checkbox, radio);
+        // }
+        // Option 枚举, 用来表示当前变量的值是缺失的, 用来代替 null
+        // {
+        //     // 泛型T
+        //     enum Option<T> {
+        //         Some(T), // 含有值
+        //         None,    // 没有值
+        //     }
+
+        //     // Some 和 None 可以直接省略 不必要通过 Option::Some 这种使用方式
+        //     let some_num = Some(5);
+        //     let absent_number: Option<i32> = None; // 使用None时须要指定Option的T的类型
+
+        //     // 如果想使用一个可能为空的值 那就必须明确处理值为空的情况
+        // }
     }
 }
