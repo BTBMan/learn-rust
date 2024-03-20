@@ -273,212 +273,299 @@ fn main() {
         //     // }
         // }
         // match
-        {
-            // match
-            // {
-            //     // {
-            //     //     enum Type {
-            //     //         Input,
-            //     //         Button,
-            //     //         Checkbox,
-            //     //         Radio,
-            //     //     };
+        // {
+        //     // match
+        //     // {
+        //     //     // {
+        //     //     //     enum Type {
+        //     //     //         Input,
+        //     //     //         Button,
+        //     //     //         Checkbox,
+        //     //     //         Radio,
+        //     //     //     };
 
-            //     //     let input = Type::Input;
+        //     //     //     let input = Type::Input;
 
-            //     //     // 每条模式分支的返回值类型必须一致
-            //     //     // match 本身也是表达式 所以他的返回值可以赋值给其他变量 这里返回了一个单元类型
-            //     //     let res = match input {
-            //     //         Type::Button => println!("Button"),
-            //     //         // xxx 或 xxx
-            //     //         Type::Input | Type::Radio => {
-            //     //             println!("Input or Radio");
-            //     //         }
-            //     //         _ => println!("Checkbox"), // 其他情况
-            //     //     };
+        //     //     //     // 每条模式分支的返回值类型必须一致
+        //     //     //     // match 本身也是表达式 所以他的返回值可以赋值给其他变量 这里返回了一个单元类型
+        //     //     //     let res = match input {
+        //     //     //         Type::Button => println!("Button"),
+        //     //     //         // xxx 或 xxx
+        //     //     //         Type::Input | Type::Radio => {
+        //     //     //             println!("Input or Radio");
+        //     //     //         }
+        //     //     //         _ => println!("Checkbox"), // 其他情况
+        //     //     //     };
 
-            //     //     println!("{:?}", res); // ()
-            //     // }
-            //     // 模式绑定
-            //     // {
-            //     //     // 在模式中取出绑定的值
-            //     //     #[derive(Debug)]
-            //     //     enum Shape {
-            //     //         Circle,
-            //     //         Rect,
-            //     //     }
+        //     //     //     println!("{:?}", res); // ()
+        //     //     // }
+        //     //     // 模式绑定
+        //     //     // {
+        //     //     //     // 在模式中取出绑定的值
+        //     //     //     #[derive(Debug)]
+        //     //     //     enum Shape {
+        //     //     //         Circle,
+        //     //     //         Rect,
+        //     //     //     }
 
-            //     //     enum Type {
-            //     //         Input,
-            //     //         Button(Shape),
-            //     //     }
+        //     //     //     enum Type {
+        //     //     //         Input,
+        //     //     //         Button(Shape),
+        //     //     //     }
 
-            //     //     let button = Type::Button(Shape::Rect);
+        //     //     //     let button = Type::Button(Shape::Rect);
 
-            //     //     match button {
-            //     //         Type::Button(shape) => {
-            //     //             println!("{:?}", shape)
-            //     //         }
-            //     //         _ => println!("Input"),
-            //     //     }
-            //     // }
-            // }
-            // if let 只匹配一个条件时使用
-            // {
-            //     let v = Some(3);
+        //     //     //     match button {
+        //     //     //         Type::Button(shape) => {
+        //     //     //             println!("{:?}", shape)
+        //     //     //         }
+        //     //     //         _ => println!("Input"),
+        //     //     //     }
+        //     //     // }
+        //     // }
+        //     // if let 只匹配一个条件时使用
+        //     // {
+        //     //     let v = Some(3);
 
-            //     if let Some(3) = v {
-            //         println!("3");
-            //     }
+        //     //     if let Some(3) = v {
+        //     //         println!("3");
+        //     //     }
 
-            //     // 这里 x 为变量 (?可以理解为形参吗)
-            //     if let Some(x) = v {
-            //         println!("3, {x}");
-            //     }
+        //     //     // 这里 x 为变量 (?可以理解为形参吗)
+        //     //     if let Some(x) = v {
+        //     //         println!("3, {x}");
+        //     //     }
 
-            //     let y = 4;
-            //     if let Some(y) = v {
-            //         println!("3, {y}");
-            //     }
-            // }
-            // matches!宏 直接返回 true 或 false
-            // {
-            //     let foo = 'A';
-            //     let res1 = matches!(foo, 'a'..='z' | 'A'..='Z');
+        //     //     let y = 4;
+        //     //     if let Some(y) = v {
+        //     //         println!("3, {y}");
+        //     //     }
+        //     // }
+        //     // matches!宏 直接返回 true 或 false
+        //     // {
+        //     //     let foo = 'A';
+        //     //     let res1 = matches!(foo, 'a'..='z' | 'A'..='Z');
 
-            //     println!("{res1}");
+        //     //     println!("{res1}");
 
-            //     let bar = Some(4);
-            //     let res2 = matches!(bar, Some(x) if x > 2);
+        //     //     let bar = Some(4);
+        //     //     let res2 = matches!(bar, Some(x) if x > 2);
 
-            //     println!("{res2}");
-            // }
-            // 无论是match还是if let都会发生变量遮蔽 语句中的变量会遮蔽上层变量
-            // 结构 Option
-            // {
-            //     fn plus_one(x: Option<i32>) -> Option<i32> {
-            //         match x {
-            //             None => None,
-            //             Some(x) => Some(x + 1),
-            //         }
-            //     }
+        //     //     println!("{res2}");
+        //     // }
+        //     // 无论是match还是if let都会发生变量遮蔽 语句中的变量会遮蔽上层变量
+        //     // 结构 Option
+        //     // {
+        //     //     fn plus_one(x: Option<i32>) -> Option<i32> {
+        //     //         match x {
+        //     //             None => None,
+        //     //             Some(x) => Some(x + 1),
+        //     //         }
+        //     //     }
 
-            //     let v1 = Some(5);
-            //     let v2 = plus_one(v1);
-            //     let v3 = plus_one(None);
+        //     //     let v1 = Some(5);
+        //     //     let v2 = plus_one(v1);
+        //     //     let v3 = plus_one(None);
 
-            //     println!("{:?},{:?},{:?}", v1, v2, v3);
-            // }
-            // while let
-            // {
-            //     // Vec是动态数组
-            //     let mut stack = Vec::new();
+        //     //     println!("{:?},{:?},{:?}", v1, v2, v3);
+        //     // }
+        //     // while let
+        //     // {
+        //     //     // Vec是动态数组
+        //     //     let mut stack = Vec::new();
 
-            //     // 向数组尾部插入元素
-            //     stack.push(1);
-            //     stack.push(2);
-            //     stack.push(3);
+        //     //     // 向数组尾部插入元素
+        //     //     stack.push(1);
+        //     //     stack.push(2);
+        //     //     stack.push(3);
 
-            //     // stack.pop从数组尾部弹出元素
-            //     while let Some(top) = stack.pop() {
-            //         println!("{}", top);
-            //     }
-            // }
-            // 匹配范围
-            // {
-            //     let x1 = 5;
+        //     //     // stack.pop从数组尾部弹出元素
+        //     //     while let Some(top) = stack.pop() {
+        //     //         println!("{}", top);
+        //     //     }
+        //     // }
+        //     // 匹配范围
+        //     // {
+        //     //     let x1 = 5;
 
-            //     match x1 {
-            //         1..=5 => println!("matched"),
-            //         _ => println!("not matched")
-            //     }
-            // }
-            // construction
-            // {
-            //     struct Point {
-            //         x: i32,
-            //         y: i32,
-            //     }
+        //     //     match x1 {
+        //     //         1..=5 => println!("matched"),
+        //     //         _ => println!("not matched")
+        //     //     }
+        //     // }
+        //     // construction
+        //     // {
+        //     //     struct Point {
+        //     //         x: i32,
+        //     //         y: i32,
+        //     //     }
 
-            //     let p = Point { x: 3, y: 4 };
+        //     //     let p = Point { x: 3, y: 4 };
 
-            //     let Point { x, y } = p;
-            //     println!("{x}, {y}");
+        //     //     let Point { x, y } = p;
+        //     //     println!("{x}, {y}");
 
-            //     // variable alias
-            //     let Point { x: x1, y: y1 } = p;
-            //     println!("{x1}, {y1}");
-            // }
-            // 匹配结构体
-            // {
-            //     struct Point {
-            //         x: i32,
-            //         y: i32,
-            //     }
+        //     //     // variable alias
+        //     //     let Point { x: x1, y: y1 } = p;
+        //     //     println!("{x1}, {y1}");
+        //     // }
+        //     // 匹配结构体
+        //     // {
+        //     //     struct Point {
+        //     //         x: i32,
+        //     //         y: i32,
+        //     //     }
 
-            //     let p = Point { x: 1, y: 9 };
+        //     //     let p = Point { x: 1, y: 9 };
 
-            //     match p {
-            //         Point { x: 1, y } => println!("matched x = 1, y is {y}"), // 只匹配 x
-            //         Point { x: _, y: 2 } => println!("matched y = 2"),        // 只匹配 y
-            //         Point { x: _, y: __ } => println!("not matched anything"),
-            //     }
-            // }
-            // construct nested enum
-            // {
-            //     enum ColorType {
-            //         Rgb(i32, i32, i32),
-            //         Hsv(i32, i32, i32),
-            //     }
+        //     //     match p {
+        //     //         Point { x: 1, y } => println!("matched x = 1, y is {y}"), // 只匹配 x
+        //     //         Point { x: _, y: 2 } => println!("matched y = 2"),        // 只匹配 y
+        //     //         Point { x: _, y: __ } => println!("not matched anything"),
+        //     //     }
+        //     // }
+        //     // construct nested enum
+        //     // {
+        //     //     enum ColorType {
+        //     //         Rgb(i32, i32, i32),
+        //     //         Hsv(i32, i32, i32),
+        //     //     }
 
-            //     enum Med {
-            //         ChangeColor(ColorType),
-            //         Move,
-            //     }
+        //     //     enum Med {
+        //     //         ChangeColor(ColorType),
+        //     //         Move,
+        //     //     }
 
-            //     let ins = Med::ChangeColor(ColorType::Rgb(1, 2, 3));
-            //     // let ins = Med::ChangeColor(ColorType::Hsv(1, 2, 3));
+        //     //     let ins = Med::ChangeColor(ColorType::Rgb(1, 2, 3));
+        //     //     // let ins = Med::ChangeColor(ColorType::Hsv(1, 2, 3));
 
-            //     match ins {
-            //         Med::ChangeColor(ColorType::Rgb(_, __, ___)) => println!("change color"),
-            //         _ => println!("not"),
-            //     }
-            // }
-            // 解构嵌套的元祖和结构体
-            // {
-            //     #[derive(Debug)]
-            //     struct Point {
-            //         x: i32,
-            //         y: i32,
-            //         color: Color,
-            //     }
+        //     //     match ins {
+        //     //         Med::ChangeColor(ColorType::Rgb(_, __, ___)) => println!("change color"),
+        //     //         _ => println!("not"),
+        //     //     }
+        //     // }
+        //     // 解构嵌套的元祖和结构体
+        //     // {
+        //     //     #[derive(Debug)]
+        //     //     struct Point {
+        //     //         x: i32,
+        //     //         y: i32,
+        //     //         color: Color,
+        //     //     }
 
-            //     #[derive(Debug)]
-            //     struct Color {
-            //         rgb: (i32, i32, i32),
-            //     }
+        //     //     #[derive(Debug)]
+        //     //     struct Color {
+        //     //         rgb: (i32, i32, i32),
+        //     //     }
 
-            //     // let (a, b) = ((1, 3), Point { x: 4, y: 10 });
-            //     let (
-            //         (a, b),
-            //         Point {
-            //             x,
-            //             y,
-            //             color: Color { rgb: (aa, bb, cc) },
-            //         },
-            //     ) = (
-            //         (1, 3),
-            //         Point {
-            //             x: 4,
-            //             y: 10,
-            //             color: Color { rgb: (11, 22, 33) },
-            //         },
-            //     );
-            //     println!(
-            //         "{:?}, {:?}, {:?}, {:?}, {:?},{:?},{:?}",
-            //         a, b, x, y, aa, bb, cc
-            //     );
-            // }
-        }
+        //     //     // let (a, b) = ((1, 3), Point { x: 4, y: 10 });
+        //     //     let (
+        //     //         (a, b),
+        //     //         Point {
+        //     //             x,
+        //     //             y,
+        //     //             color: Color { rgb: (aa, bb, cc) },
+        //     //         },
+        //     //     ) = (
+        //     //         (1, 3),
+        //     //         Point {
+        //     //             x: 4,
+        //     //             y: 10,
+        //     //             color: Color { rgb: (11, 22, 33) },
+        //     //         },
+        //     //     );
+        //     //     println!(
+        //     //         "{:?}, {:?}, {:?}, {:?}, {:?},{:?},{:?}",
+        //     //         a, b, x, y, aa, bb, cc
+        //     //     );
+        //     // }
+        //     // 结构数组
+        //     // {
+        //     //     // 固定长度
+        //     //     // {
+        //     //     //     let arr1 = [1, 2];
+        //     //     //     let [a, b] = arr1;
+
+        //     //     //     println!("{}, {}", a, b);
+        //     //     // }
+        //     //     // 不固定长度
+        //     //     {
+        //     //         let arr1 = [1, 2];
+
+        //     //         let [x, ..] = arr1;
+
+        //     //         println!("{}", x);
+
+        //     //         let arr2 = &[3, 4];
+        //     //         let &[a, b] = arr2;
+        //     //         let [c, d] = arr2;
+
+        //     //         println!("{}, {}, {}, {}", a, b, c, d);
+
+        //     //         // if let [x2, ..] = arr2 {
+        //     //         //     println!("{}", x2)
+        //     //         // }
+        //     //     }
+        //     // }
+        //     // 在匹配中使用忽略模式
+        //     // {
+        //     //     let nums = (1, 2, 3);
+        //     //     match nums {
+        //     //         (3, 2, 1) => println!("3,2,1"),
+        //     //         // (_, 2, _) => println!("x,2,x"), // 只匹配第二个为2的元祖
+        //     //         (.., 3) => println!("x,x,3"), // 使用省略模式 省略忽略的值 值匹配最后一个为3的元祖
+        //     //         _ => println!("not ..."),
+        //     //     }
+        //     // }
+        //     // 使用下划线_加字母的变量 仍会被绑定值, 只使用下划线_则不会被绑定值 比如使用_绑定一个值的所有权 则原来的变量并不会丢失所有权.
+        //     // 匹配中的额外条件
+        //     // {
+        //     //     let num = Some(5);
+
+        //     //     match num {
+        //     //         Some(x) if x > 4 => println!("x > 4"), // 模式中的额外 if 条件 更进一步匹配
+        //     //         _ => println!("not ..."),
+        //     //     }
+        //     // }
+        //     // 匹配多个
+        //     // {
+        //     //     let num1 = Some(1);
+        //     //     let num2 = Some(2);
+
+        //     //     match (num1, num2) {
+        //     //         // (Some(_), Some(_)) => println!("Some"),
+        //     //         // (Some(1), Some(2)) => println!("1,2"),
+        //     //         (Some(1), Some(3)) => println!("1,3"),
+        //     //         _ => println!("not ..."),
+        //     //     }
+        //     // }
+        //     // 绑定 将变量绑定到一个新的变量
+        //     // {
+        //     //     // {
+        //     //     //     struct Point {
+        //     //     //         x: i32,
+        //     //     //         y: i32,
+        //     //     //     }
+
+        //     //     //     let point = Point { x: 1, y: 2 };
+
+        //     //     //     match point {
+        //     //     //         Point { x: x_var @ _, .. } => println!("{}", x_var), // 将 x 绑定到新变量 x_var 上
+        //     //     //     }
+        //     //     // }
+        //     //     // {
+        //     //     //     #[derive(Debug)]
+        //     //     //     struct Point {
+        //     //     //         x: i32,
+        //     //     //         y: i32,
+        //     //     //     }
+
+        //     //     //     // 绑定新变量的同时进行结构
+        //     //     //     let p @ Point { x, y } = Point { x: 1, y: 2 };
+
+        //     //     //     println!("{:?}, {},{}", p, x, y);
+        //     //     // }
+        //     // }
+        // }
     }
 }
