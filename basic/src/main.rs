@@ -670,7 +670,7 @@ fn main() {
         //     let c = Color::Rgb(1, 2, 3);
         //     c.value()
         // }
-        // 泛型 类似 ts 中泛型
+        // 泛型 类似 ts 中泛型, 特征 类似 interface
         {
             // {
             //     fn add<T>(x: T, y: T) -> T {
@@ -705,8 +705,49 @@ fn main() {
             //     // const 泛型表达式 where
             // }
             // trait 特征
+            // 可以理解为定义特征就是 interface 接口 实现特征为继承接口
             {
-                //
+                // {
+                //     trait Action {
+                //         fn barking(&self) -> &String;
+                //     }
+
+                //     struct Dog {
+                //         voice: String,
+                //     }
+
+                //     // 实现 特征 为 xxx
+                //     impl Action for Dog {
+                //         fn barking(&self) -> &String {
+                //             &self.voice
+                //         }
+                //     }
+
+                //     struct Cat {
+                //         voice: String,
+                //     }
+
+                //     impl Action for Cat {
+                //         fn barking(&self) -> &String {
+                //             &self.voice
+                //         }
+                //     }
+
+                //     let dog = Dog {
+                //         voice: "wang".to_string(),
+                //     };
+                //     let cat = Cat {
+                //         voice: "mao".to_string(),
+                //     };
+
+                //     println!("{:?}, {:?}", dog.barking(), cat.barking());
+                // }
+                // 为 Â 实现 B 特征, 则他俩至少有一个是在当前作用域当中
+                // 你可以为标准库中的类型实现你自定义的特征 也可以为你自定义的类型标准库中的特征 但是不可以为标准库中的类型实现标准库中的特征 因为他们都没在当前的作用域内
+                // 特征中的默认实现方法和重载特征中的方法
+                {
+                    //
+                }
             }
         }
     }
