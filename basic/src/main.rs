@@ -670,5 +670,44 @@ fn main() {
         //     let c = Color::Rgb(1, 2, 3);
         //     c.value()
         // }
+        // 泛型 类似 ts 中泛型
+        {
+            // {
+            //     fn add<T>(x: T, y: T) -> T {
+            //         x + y
+            //     }
+
+            //     enum Enum1<T, U> {
+            //         A(T),
+            //         B(U),
+            //     }
+
+            //     struct Struct1<T> {
+            //         a: T,
+            //     }
+
+            //     // 方法中的泛型
+            //     impl<T> Struct1<T> {
+            //         fn get_a<K>(&self, other: K) -> &T {
+            //             println!("{}", other);
+            //             &self.a
+            //         }
+            //     }
+
+            //     // const 针对值的泛型
+            //     // 这里的 N 是值的泛型 数来代替数组的长度 值的类型是 usize
+            //     fn display_arr<T, const N: usize>(arr: [T; N]) {
+            //         println!("{:?}", arr)
+            //     }
+            //     let arr: [i32; 3] = [1, 2, 3];
+            //     let arr: [i32; 2] = [1, 2];
+
+            //     // const 泛型表达式
+            // }
+            // trait 特征
+            {
+                //
+            }
+        }
     }
 }
