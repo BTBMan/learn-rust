@@ -702,7 +702,7 @@ fn main() {
             //     let arr: [i32; 3] = [1, 2, 3];
             //     let arr: [i32; 2] = [1, 2];
 
-            //     // const 泛型表达式
+            //     // const 泛型表达式 where
             // }
             // trait 特征
             {
