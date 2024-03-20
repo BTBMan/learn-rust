@@ -82,14 +82,14 @@ fn main() {
     //     let b = &a;
 
     //     println!("{a},{b}");
-    //     assert_eq!(5, *b); // 解引用之后才能访问b所指向的值 然后进行比较. 不解引用的话 b是个引用 不能与整型进行比较
+    //     assert_eq!(5, *b); // 解引用之后才能访问 b 所指向的值 然后进行比较. 不解引用的话 b 是个引用 不能与整型进行比较
     // }
     // 字符串拼接
     // {
     //     let s1 = String::from("Hello");
     //     let s2 = String::from("world");
 
-    //     // String 必须和一个字符串切片($str)进行拼接
+    //     // String 必须和一个字符串切片 ($str) 进行拼接
     //     let s3 = s1 + &s2;
 
     //     println!("{s3}");
@@ -170,7 +170,7 @@ fn main() {
         // 单元结构体
         // {
         //     #[derive(Debug)]
-        //     struct AB; // 定义了一个单元体(啥也没有)的结构体
+        //     struct AB; // 定义了一个单元体 (啥也没有) 的结构体
 
         //     let a = AB;
 
@@ -208,7 +208,7 @@ fn main() {
         // }
         // Option 枚举, 用来表示当前变量的值是缺失的, 用来代替 null
         // {
-        //     // 泛型T
+        //     // 泛型 T
         //     enum Option<T> {
         //         Some(T), // 含有值
         //         None,    // 没有值
@@ -216,18 +216,18 @@ fn main() {
 
         //     // Some 和 None 可以直接省略 不必要通过 Option::Some 这种使用方式
         //     let some_num = Some(5);
-        //     let absent_number: Option<i32> = None; // 使用None时须要指定Option的T的类型
+        //     let absent_number: Option<i32> = None; // 使用 None 时须要指定 Option 的 T 的类型
 
         //     // 如果想使用一个可能为空的值 那就必须明确处理值为空的情况
         // }
         // 数组
         // {
-        //     // 长度固定的数组(array)存储在栈中
+        //     // 长度固定的数组 (array) 存储在栈中
         //     {
         //         // {
         //         //     // 长度固定 类型统一
         //         //     let arr1 = [1, 2, 3, 4];
-        //         //     let arr2 = [2; 5]; // 重复出现5次2
+        //         //     let arr2 = [2; 5]; // 重复出现 5 次 2
 
         //         //     println!("{}", arr1[0]);
         //         //     // println!("{}", arr1[4]); // 不可以跨界访问数组元素
@@ -241,7 +241,7 @@ fn main() {
         //         // }
         //     }
 
-        //     // 动态数组(Vector)存储在堆中
+        //     // 动态数组 (Vector) 存储在堆中
         //     {
         //         //
         //     }
@@ -353,7 +353,7 @@ fn main() {
 
         //     //     println!("{res2}");
         //     // }
-        //     // 无论是match还是if let都会发生变量遮蔽 语句中的变量会遮蔽上层变量
+        //     // 无论是 match 还是 if let 都会发生变量遮蔽 语句中的变量会遮蔽上层变量
         //     // 结构 Option
         //     // {
         //     //     fn plus_one(x: Option<i32>) -> Option<i32> {
@@ -371,7 +371,7 @@ fn main() {
         //     // }
         //     // while let
         //     // {
-        //     //     // Vec是动态数组
+        //     //     // Vec 是动态数组
         //     //     let mut stack = Vec::new();
 
         //     //     // 向数组尾部插入元素
@@ -379,7 +379,7 @@ fn main() {
         //     //     stack.push(2);
         //     //     stack.push(3);
 
-        //     //     // stack.pop从数组尾部弹出元素
+        //     //     // stack.pop 从数组尾部弹出元素
         //     //     while let Some(top) = stack.pop() {
         //     //         println!("{}", top);
         //     //     }
@@ -512,8 +512,8 @@ fn main() {
         //     //     let nums = (1, 2, 3);
         //     //     match nums {
         //     //         (3, 2, 1) => println!("3,2,1"),
-        //     //         // (_, 2, _) => println!("x,2,x"), // 只匹配第二个为2的元祖
-        //     //         (.., 3) => println!("x,x,3"), // 使用省略模式 省略忽略的值 值匹配最后一个为3的元祖
+        //     //         // (_, 2, _) => println!("x,2,x"), // 只匹配第二个为 2 的元祖
+        //     //         (.., 3) => println!("x,x,3"), // 使用省略模式 省略忽略的值 值匹配最后一个为 3 的元祖
         //     //         _ => println!("not ..."),
         //     //     }
         //     // }
@@ -566,6 +566,109 @@ fn main() {
         //     //     //     println!("{:?}, {},{}", p, x, y);
         //     //     // }
         //     // }
+        // }
+        // method
+        // rust 中的方法往往跟 struct, enum, trait 一起使用
+        // {
+        //     // 简单的方法
+        //     struct Point {
+        //         x: i32,
+        //         y: i32,
+        //     }
+
+        //     // impl 关键字定义实现方法 并与 Point 相关联
+        //     impl Point {
+        //         // self 是 Point 本身, 可以当作 js 中的 this 来理解
+        //         // 这里的 self 只是对 Point 的所有权的不可变借用
+        //         fn sum(&self) -> i32 {
+        //             self.x * self.y
+        //         }
+        //     }
+
+        //     // 使用
+        //     let p = Point { x: 1, y: 2 };
+
+        //     println!("sum {}", p.sum()); // 使用 sum 方法
+        //     println!("x {}", p.x);
+        // }
+        // 私有属性
+        // 默认在本文件内 所有属性都是公开的 如果在 mod 中对外导出 则所有属性就都变成私有的了 也就是说外部无法访问
+        // 加了 pub 的作用是将成员变为公有的
+        // {
+        //     pub struct Point {
+        //         x: i32,
+        //         y: i32,
+        //     }
+
+        //     impl Point {
+        //         // 这是一个关联函数 用作初始化当前结构体的实例 用 new 作为构造器名称是 rust 中约定俗成的规则
+        //         // 大致可以用第一个参数是否是 self 来区分
+        //         // 没有就是关联函数 有就是方法
+        //         // 通过::来调用
+        //         pub fn new(x: i32, y: i32) -> Self {
+        //             Point { x, y }
+        //         }
+
+        //         pub fn test() {
+        //             println!("test")
+        //         }
+
+        //         // 如果方法名和属性名同名 则一般用来实现 getter 访问器
+        //         // 只将 getter 变为公有的 则外部就可以访问 并不可以进行修改 如果直接访问 Point.x 则会报错
+        //         // 方法可以通过::来调用 也可以实例化过后通过.来调用
+        //         pub fn x(&self) -> i32 {
+        //             self.x
+        //         }
+        //     }
+
+        //     let p1 = Point { x: 1, y: 2 };
+        //     println!("{}", p1.x());
+
+        //     Point::test();
+        //     println!("{}", Point::x(&p1)); // 这样调用则必须传入必要的参数
+
+        //     let p2 = Point::new(2, 4); // 使用关联函数 new 来构造 初始化数据等
+        //     println!("{}", p2.x());
+        // }
+        // 所个 impl 块
+        // {
+        //     struct Point {
+        //         x: i32,
+        //         y: i32,
+        //     }
+
+        //     impl Point {
+        //         fn test1(&self) {
+        //             println!("test1")
+        //         }
+        //     }
+
+        //     impl Point {
+        //         fn test2(&self) {
+        //             println!("test2")
+        //         }
+        //     }
+
+        //     let p = Point { x: 1, y: 1 };
+        //     p.test1();
+        //     p.test2();
+        // }
+        // 为枚举实现方法
+        // {
+        //     #[derive(Debug)]
+        //     enum Color {
+        //         Rgb(i32, i32, i32),
+        //         Hsv(i32, i32, i32),
+        //     }
+
+        //     impl Color {
+        //         fn value(&self) {
+        //             println!("{:?}", self);
+        //         }
+        //     }
+
+        //     let c = Color::Rgb(1, 2, 3);
+        //     c.value()
         // }
     }
 }
