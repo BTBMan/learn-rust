@@ -1185,21 +1185,21 @@ fn main() {
                 // }
                 // 在外部特征上实现外部特征
                 // 因为上面提到过 如果想要实现特征 那么特征和类型其中一个必须在当前作用域内 如果为存在于标准库中的类型实现标准库中的特征 那么上面的方法是不行的
-                {
-                    use std::fmt;
+                // {
+                //     use std::fmt;
 
-                    // 使用元祖结构体 定义一个 new type
-                    struct Wrapper(Vec<String>);
+                //     // 使用元祖结构体 定义一个 new type
+                //     struct Wrapper(Vec<String>);
 
-                    // 这样就可以为 Vec 类型实现 Display 特征了
-                    impl fmt::Display for Wrapper {
-                        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-                            write!(f, "[{}]", self.0.join(", "))
-                        }
-                    }
+                //     // 这样就可以为 Vec 类型实现 Display 特征了
+                //     impl fmt::Display for Wrapper {
+                //         fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+                //             write!(f, "[{}]", self.0.join(", "))
+                //         }
+                //     }
 
-                    // 通过 Deref 特征可以做一层类型转换 可以不必使用元祖.操作去获取元素, 还可以重载实现特征的类型的方法
-                }
+                //     // 通过 Deref 特征可以做一层类型转换 可以不必使用元祖.操作去获取元素, 还可以重载实现特征的类型的方法
+                // }
             }
         }
     }
