@@ -1,4 +1,6 @@
 // use num::complex::Complex;
+// use std::convert::TryInto;
+// use std::prelude;
 
 fn main() {
     // 解构
@@ -673,7 +675,7 @@ fn main() {
         // 泛型 类似 ts 中泛型, 特征 类似 interface
         {
             // {
-            //     fn add<T>(x: T, y: T) -> T {
+            //     fn add<T: std::ops::Add<Output = T>>(x: T, y: T) -> T {
             //         x + y
             //     }
 
@@ -688,7 +690,7 @@ fn main() {
 
             //     // 方法中的泛型
             //     impl<T> Struct1<T> {
-            //         fn get_a<K>(&self, other: K) -> &T {
+            //         fn get_a<K: std::fmt::Display>(&self, other: K) -> &T {
             //             println!("{}", other);
             //             &self.a
             //         }
@@ -696,13 +698,13 @@ fn main() {
 
             //     // const 针对值的泛型
             //     // 这里的 N 是值的泛型 数来代替数组的长度 值的类型是 usize
-            //     fn display_arr<T, const N: usize>(arr: [T; N]) {
+            //     fn display_arr<T: std::fmt::Debug, const N: usize>(arr: [T; N]) {
             //         println!("{:?}", arr)
             //     }
             //     let arr: [i32; 3] = [1, 2, 3];
             //     let arr: [i32; 2] = [1, 2];
 
-            //     // const 泛型表达式 where
+            //     // const 泛型表达式 where 在下面特征中有说明
             // }
             // trait 特征
             // 可以理解为定义特征就是 interface 接口 实现特征为继承接口
@@ -745,9 +747,249 @@ fn main() {
                 // 为 Â 实现 B 特征, 则他俩至少有一个是在当前作用域当中
                 // 你可以为标准库中的类型实现你自定义的特征 也可以为你自定义的类型标准库中的特征 但是不可以为标准库中的类型实现标准库中的特征 因为他们都没在当前的作用域内
                 // 特征中的默认实现方法和重载特征中的方法
-                {
-                    //
-                }
+                // {
+                //     trait Action {
+                //         // 默认实现
+                //         // 注意 想在实例化后通过.访问 就必须加上 &self 把函数作为方法
+                //         fn barking(&self) {
+                //             println!("HaHa");
+                //         }
+                //     }
+
+                //     struct Dog {
+                //         voice: String,
+                //     }
+
+                //     struct Cat {
+                //         voice: String,
+                //     }
+
+                //     impl Action for Dog {}
+
+                //     impl Action for Cat {
+                //         fn barking(&self) {
+                //             println!("mao");
+                //         }
+                //     }
+
+                //     let dog = Dog {
+                //         voice: "wang".to_string(),
+                //     };
+                //     let cat = Cat {
+                //         voice: "mao".to_string(),
+                //     };
+
+                //     dog.barking();
+                //     cat.barking();
+                // }
+                // 特征定默认实现里可以调用具有相同特征中的其他方法
+                // {
+                //     trait Action {
+                //         fn action1(&self);
+                //         fn action2(&self) {
+                //             self.action1(); // 调用自身的 action1
+                //         }
+                //     }
+
+                //     struct User;
+
+                //     impl Action for User {
+                //         fn action1(&self) {
+                //             println!("action 1 is called");
+                //         }
+                //     }
+
+                //     let user = User {};
+
+                //     user.action2();
+                // }
+                // 把特征当作函数参数传递 + 特征约束
+                // {
+                //     trait Action {
+                //         fn action1(&self);
+                //     }
+
+                //     struct User;
+
+                //     impl Action for User {
+                //         fn action1(&self) {
+                //             println!("action 1 is called");
+                //         }
+                //     }
+
+                //     // 此处定义的参数 action 的类型是必须实现了 Action 特征的
+                //     // 这种书写形势只是一个语法糖
+                //     // fn doit(action: &impl Action) {
+                //     //     action.action1()
+                //     // }
+                //     // 这是完整的书写形式 称为特征约束 用来约束泛型 T 的类型是必须实现了 Action 特征的
+                //     fn doit<T: Action>(action: &T) {
+                //         action.action1();
+                //     }
+
+                //     let user = User;
+
+                //     doit(&user);
+
+                //     // 双重约束
+                //     trait Fade {
+                //         fn show(&self);
+                //     }
+
+                //     // 再次为 user 实现 Fade 特征
+                //     impl Fade for User {
+                //         fn show(&self) {
+                //             println!("user has show fn");
+                //         }
+                //     }
+
+                //     // 参数 p 必须是实现了 Action 和 Fade 特征的
+                //     // fn multi(p: &(impl Action + Fade)) {
+                //     //     p.action1();
+                //     //     p.show();
+                //     // }
+                //     fn multi<T: Action + Fade>(p: &T) {
+                //         p.action1();
+                //         p.show();
+                //     }
+
+                //     multi(&user);
+
+                //     // where 约束
+                //     // 只是将泛型中的特征约束提取到 where 里
+                //     {
+                //         fn multi2<T, U>(p1: &T, p2: U)
+                //         where
+                //             T: Action + Fade,
+                //             U: Fade,
+                //         {
+                //             p1.action1();
+                //             p1.show();
+                //         }
+                //     }
+                // }
+                // 使用特征约束有条件的实现方法
+                // {
+                //     use std::fmt::Display;
+
+                //     struct Pair<T> {
+                //         x: T,
+                //         y: T,
+                //     }
+
+                //     impl<T> Pair<T> {
+                //         fn new(x: T, y: T) -> Self {
+                //             Self { x, y }
+                //         }
+                //     }
+
+                //     impl<T: Display + PartialOrd> Pair<T> {
+                //         fn cmp_display(&self) { // 调用这个方法只有实现了 Display + PartialOrd 特征的值才可以
+                //             if self.x >= self.y {
+                //                 println!("The largest member is x = {}", self.x);
+                //             } else {
+                //                 println!("The largest member is y = {}", self.y);
+                //             }
+                //         }
+                //     }
+
+                //     enum A {
+                //         A,
+                //     }
+
+                //     let pair = Pair {
+                //         x: A::A, // 用了不被约束的特征的值 在调用相关方法会报错
+                //         y: A::A,
+                //         // x: String::from("value"),
+                //         // y: String::from("value"),
+                //     };
+
+                //     pair.cmp_display();
+                // }
+                // 函数返回中的特征
+                // {
+                //     trait Action {
+                //         fn action1(&self);
+                //     }
+
+                //     struct User;
+
+                //     impl Action for User {
+                //         fn action1(&self) {
+                //             println!("action 1 is called");
+                //         }
+                //     }
+
+                //     // 函数返回值是一个实现了 Action 特征的就可以
+                //     // 只能返回一个具体的类型 例如为结构体 Animal 实现了 Action 特征 那么这个函数的返回就必须只存在这两个中的一个类型的可能
+                //     fn return_trait() -> impl Action {
+                //         User
+                //     }
+                // }
+                // 可以通过 derive 为某个类型派生特定的特征, 这样这个类型就可以使用派生出来的方法等
+                // 如果想使用特征中的方法 可以将这个特征引入到当前作用域中
+                // {
+                //     // use std::convert::TryInto; // 这个实际在最顶层引入 那样就不会报未使用的警告了
+
+                //     let a: i32 = 10;
+                //     let b: u16 = 100;
+
+                //     let b_ = b.try_into().unwrap();
+
+                //     if a < b_ {
+                //         println!("Ten is less than one hundred.");
+                //     }
+                // }
+                // 为自定义类型实现 Add
+                // {
+                //     // 引入 Add 特征
+                //     use std::ops::Add;
+
+                //     // 限制泛型 T 必须是具备 Add 特征的
+                //     #[derive(Debug)]
+                //     struct Point<T: Add<T, Output = T>> {
+                //         x: T,
+                //         y: T,
+                //     }
+
+                //     // 为 Point 结构体实现 Add 特征 这样就可以进行两个 Point 结构体相加了
+                //     impl<T: Add<T, Output = T>> Add for Point<T> {
+                //         type Output = Point<T>;
+
+                //         // 这里是具体的相加实现 想通过 Point + Point 实现什么效果, 这里是把属性值 x 和 y 分别进行相加操作
+                //         fn add(self, point: Point<T>) -> Point<T> {
+                //             Point {
+                //                 x: self.x + point.x,
+                //                 y: self.y + point.y,
+                //             }
+                //         }
+                //     }
+
+                //     let p1 = Point { x: 1, y: 2 };
+                //     let p2 = Point { x: 3, y: 4 };
+
+                //     println!("{:?}", p1 + p2)
+                // }
+                // 为自定义类型实现格式化输出
+                // {
+                //     // 引入特征
+                //     use std::fmt::Display;
+
+                //     struct Point {
+                //         x: i32,
+                //         y: i32,
+                //     }
+
+                //     impl Display for Point {
+                //         fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                //             write!(f, "x is {}, y is {}", self.x, self.y)
+                //         }
+                //     }
+
+                //     let p1 = Point { x: 1, y: 2 };
+
+                //     println!("{}", p1);
+                // }
             }
         }
     }
