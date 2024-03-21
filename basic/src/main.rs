@@ -1063,6 +1063,143 @@ fn main() {
                 //         //
                 //     }
                 // }
+                // 关联类型
+                // 如果类型较多的话 比泛型更美观 更易懂
+                // {
+                //     trait Action {
+                //         type Val; // 特征里定义一个关联类型
+
+                //         fn action1(&self, val: Self::Val);
+                //     }
+
+                //     struct User;
+
+                //     impl Action for User {
+                //         // 这里定义真正的类型 类型为 i32
+                //         type Val = i32;
+
+                //         fn action1(&self, val: Self::Val) {
+                //             println!("{:?}", val);
+                //         }
+                //     }
+
+                //     let user1 = User;
+                //     user1.action1(3);
+                // }
+                // 泛型默认类型
+                // {
+                //     // 这里给了泛型 T 默认的类型
+                //     trait Action<T = Self> {
+                //         fn action1(&self, val: T);
+                //     }
+
+                //     struct User;
+
+                //     // 这里又重新指定了泛型 T 的类型为 i32
+                //     impl Action<i32> for User {
+                //         // val 的类型和新指定的泛型 T 的类型保持一致
+                //         fn action1(&self, val: i32) {
+                //             println!("{}", val);
+                //         }
+                //     }
+
+                //     let user1 = User;
+                //     user1.action1(3);
+                // }
+                // 调用同名方法
+                // {
+                //     trait Swim {
+                //         fn action(&self);
+                //         fn action2();
+                //     }
+
+                //     trait Jump {
+                //         fn action(&self);
+                //         fn action2();
+                //     }
+
+                //     struct User;
+
+                //     impl Swim for User {
+                //         fn action(&self) {
+                //             println!("Swim");
+                //         }
+                //         fn action2() {
+                //             println!("Swim");
+                //         }
+                //     }
+
+                //     impl Jump for User {
+                //         fn action(&self) {
+                //             println!("Jump");
+                //         }
+                //         fn action2() {
+                //             println!("Jump");
+                //         }
+                //     }
+
+                //     impl User {
+                //         fn action(&self) {
+                //             println!("User");
+                //         }
+                //         fn action2() {
+                //             println!("User");
+                //         }
+                //     }
+
+                //     let user1 = User;
+                //     // 调用方法
+                //     user1.action(); // 默认调用的是该类型中定义的方法 也就是 User
+                //     Swim::action(&user1); // 使用特征下的函数调用
+                //     Jump::action(&user1);
+                //     // 调用关联函数
+                //     User::action2();
+                //     <User as Swim>::action2(); // 使用 as 限定语法明确 User 是哪个特征
+                //     <User as Jump>::action2();
+                // }
+                // 特征约束
+                // {
+                //     trait Target {
+                //         fn must();
+                //     }
+
+                //     // 约束实现 Action 特征的类型要先具备 Target 的特征
+                //     trait Action: Target {
+                //         fn action1();
+                //     }
+
+                //     struct User;
+
+                //     // 必须先为 User 实现 Target 特征
+                //     impl Target for User {
+                //         fn must() {
+                //             println!("User must");
+                //         }
+                //     }
+
+                //     impl Action for User {
+                //         fn action1() {
+                //             println!("User action");
+                //         }
+                //     }
+                // }
+                // 在外部特征上实现外部特征
+                // 因为上面提到过 如果想要实现特征 那么特征和类型其中一个必须在当前作用域内 如果为存在于标准库中的类型实现标准库中的特征 那么上面的方法是不行的
+                {
+                    use std::fmt;
+
+                    // 使用元祖结构体 定义一个 new type
+                    struct Wrapper(Vec<String>);
+
+                    // 这样就可以为 Vec 类型实现 Display 特征了
+                    impl fmt::Display for Wrapper {
+                        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+                            write!(f, "[{}]", self.0.join(", "))
+                        }
+                    }
+
+                    // 通过 Deref 特征可以做一层类型转换 可以不必使用元祖.操作去获取元素, 还可以重载实现特征的类型的方法
+                }
             }
         }
     }
