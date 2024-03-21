@@ -990,6 +990,79 @@ fn main() {
 
                 //     println!("{}", p1);
                 // }
+                // 特征对象
+                // {
+                //     trait Action {
+                //         fn action1(&self);
+                //     }
+
+                //     struct User;
+
+                //     impl Action for User {
+                //         fn action1(&self) {
+                //             println!("user");
+                //         }
+                //     }
+
+                //     struct Animal;
+
+                //     impl Action for Animal {
+                //         fn action1(&self) {
+                //             println!("animal")
+                //         }
+                //     }
+
+                //     // 正如之前说过 返回值里只能返回一种特征对象 这里返回了两个 所以报错了
+                //     // fn return_trait() -> impl Action {
+                //     //     let is_user = false;
+
+                //     //     if is_user {
+                //     //         User
+                //     //     } else {
+                //     //         Animal
+                //     //     }
+                //     // }
+                //     // 通过 & 引用或者 Box<T> 只能指针创建特征对象来解决这个问题
+                //     // 一般像泛型等这类在编译期确定的属于静态分发
+                //     // 这里的 dyn 的意思是动态分发 直到程序运行期才直到类型是什么
+                //     fn return_trait() -> Box<dyn Action> {
+                //         let is_user = true;
+
+                //         if is_user {
+                //             Box::new(User)
+                //         } else {
+                //             Box::new(Animal)
+                //         }
+                //     }
+
+                //     let v = return_trait();
+
+                //     v.action1();
+                // }
+                // self 和 Self
+                // 不是所有的特征都可以有特征对象
+                // {
+                //     // 这个特征就不能有特征对象 原因是他的 action1 方法的放回类型是 Self
+                //     // 还有一种是方法中含有泛型参数的也不可以作为特征对象
+                //     trait Action {
+                //         fn action1(&self) -> Self;
+                //     }
+
+                //     struct User;
+
+                //     impl Action for User {
+                //         // self 指 User 实例化后的对象
+                //         // Self 指 User 类型
+                //         fn action1(&self) -> Self {
+                //             User
+                //         }
+                //     }
+
+                //     // 报错
+                //     fn return_trait() -> Box<dyn Action> {
+                //         //
+                //     }
+                // }
             }
         }
     }
