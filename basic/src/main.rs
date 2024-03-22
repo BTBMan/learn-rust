@@ -1395,5 +1395,121 @@ fn main() {
         //     //     // }
         //     // }
         // }
+        // 生命周期
+        {
+            // 悬垂指针
+            // {
+            //     // {
+            //     //     let a;
+
+            //     //     {
+            //     //         let b = 1;
+            //     //         // a = b; // 这里只是 copy 没有问题
+            //     //         a = &b; // 如果这里是个引用 则会出现问题
+            //     //                 // b 在这个小的作用域离开后被释放 所以 a 引用了一个无效的引用
+            //     //     }
+
+            //     //     println!("{}", a);
+            //     // }
+            //     // {
+            //     //     // 如果作用域一样大就没有问题
+            //     //     let a;
+            //     //     let b = 1;
+            //     //     a = &b;
+
+            //     //     println!("{}", a);
+            //     // }
+            // }
+            // 函数中的生命周期
+            // {
+            //     let str1 = String::from("string1");
+            //     let str2 = "string222";
+
+            //     let res1 = longest(str1.as_str(), str2);
+            //     println!("{}", res1);
+
+            //     // 报错 因为函数不知道返回的是 a 还是 b 的引用
+            //     // 无法得知 a 和 b 的生命周期
+            //     // 无法知道返回值的生命周期和 a 和 b 的生命周期的关系
+            //     // 当存在多个引用时 编译器有时候也无法推导出生命周期
+            //     // fn longest(a: &str, b: &str) -> &str {
+            //     //     if a.len() > b.len() {
+            //     //         a
+            //     //     } else {
+            //     //         b
+            //     //     }
+            //     // }
+            //     // 生命周期标注
+            //     // 'a 标注 a 可以是任何字符 一般用 a
+            //     // 生命周期标注在引用符号后面 可变关键字前面 &'a mut &'a
+            //     // 只是告诉编译器多个引用之间的关系 并不会改变引种真实的生命周期
+            //     // 这里标注了参数 a 和 b 和返回值都和函数 longest 活的一样久 这样编译器就不会报错了
+            //     // 实际上返回值的生命周期与两个参数生命周期较小的那个一致
+            //     fn longest<'a>(a: &'a str, b: &'a str) -> &'a str {
+            //         if a.len() > b.len() {
+            //             a
+            //         } else {
+            //             b
+            //         }
+            //     }
+
+            //     let str3 = String::from("string3");
+            //     {
+            //         let str4 = String::from("string444");
+            //         let res2 = longest(str3.as_str(), str4.as_str()); // 返回值的生命周期和 str4 保持一致
+
+            //         println!("{}", res2);
+            //     }
+
+            //     let str5 = String::from("string5");
+            //     let res;
+            //     {
+            //         let str6 = String::from("string666");
+            //         res = longest(str5.as_str(), str6.as_str());
+
+            //         println!("{}", res); // 这里是有效的
+            //                              // 当离开 str6 的作用域 res 也被释放
+            //     }
+
+            //     // 报错 无法访问被释放的引用
+            //     println!("{}", res);
+            // }
+            // 结构体中的生命周期
+            // {
+            //     #[derive(Debug)]
+            //     struct User<'a> {
+            //         name: &'a str,
+            //         // name: &str,
+            //     }
+
+            //     #[derive(Debug)]
+            //     struct User2 {
+            //         name: i32,
+            //     }
+
+            //     let str1 = String::from("string1");
+            //     // 没问题 str1 的生命周期和 user1 的生命周期相等
+            //     let user1 = User {
+            //         name: str1.as_str(),
+            //     };
+
+            //     println!("{:?}", user1);
+
+            //     let user2;
+            //     let user3;
+            //     {
+            //         let str2 = String::from("string2");
+            //         user2 = User {
+            //             name: str2.as_str(),
+            //         };
+            //         user3 = User2 { name: 1 };
+
+            //         println!("{:?}", user2); // 同样这里是有效的
+            //     }
+
+            //     println!("{:?}", user2); // 这里报错 name 也就是 str2 在其内部作用域完成后被释放 那么 user2 内部存在一个无效引用
+            //     println!("{:?}", user3);
+            // }
+        }
     }
 }
