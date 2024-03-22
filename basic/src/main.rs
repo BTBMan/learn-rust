@@ -1203,126 +1203,197 @@ fn main() {
         //     // }
         // }
         // 集合
-        {
-            // 动态数组
-            // {
-            //     // {
-            //     //     // 创建动态数组
-            //     //     // let mut arr1 = Vec::new();
-            //     //     // arr1.push(1); // 更新数组 如果 Vec 没有显示的指定类型 通过 push 编译期推断出 Vec 的类型是 i32
+        // {
+        //     // 动态数组
+        //     // {
+        //     //     // {
+        //     //     //     // 创建动态数组
+        //     //     //     // let mut arr1 = Vec::new();
+        //     //     //     // arr1.push(1); // 更新数组 如果 Vec 没有显示的指定类型 通过 push 编译期推断出 Vec 的类型是 i32
 
-            //     //     // println!("{:?}", arr1);
+        //     //     //     // println!("{:?}", arr1);
 
-            //     //     // 使用宏创建时既可初始化
-            //     //     let arr2 = vec![1, 2, 3];
+        //     //     //     // 使用宏创建时既可初始化
+        //     //     //     let arr2 = vec![1, 2, 3];
 
-            //     //     println!("{:?}", arr2);
-            //     //     println!("{}", arr2[1]); // 通过下标取值
+        //     //     //     println!("{:?}", arr2);
+        //     //     //     println!("{}", arr2[1]); // 通过下标取值
 
-            //     //     // 使用 .get 取值 得到的是一个 Option 枚举 须要通过匹配处理值
-            //     //     // 与下标直接取值不同的是 如果发生取值越界 .get 不会报错 下标取值就会报错
-            //     //     let val = match arr2.get(1) {
-            //     //         Some(v) => v,
-            //     //         None => &0,
-            //     //     };
+        //     //     //     // 使用 .get 取值 得到的是一个 Option 枚举 须要通过匹配处理值
+        //     //     //     // 与下标直接取值不同的是 如果发生取值越界 .get 不会报错 下标取值就会报错
+        //     //     //     let val = match arr2.get(1) {
+        //     //     //         Some(v) => v,
+        //     //     //         None => &0,
+        //     //     //     };
 
-            //     //     println!("{}", val);
+        //     //     //     println!("{}", val);
 
-            //     //     // 第三种初始化
-            //     //     let arr3 = vec![0; 3]; // 和静态数组一样 初始化 3 个 0
-            //     //     println!("{:?}", arr3);
+        //     //     //     // 第三种初始化
+        //     //     //     let arr3 = vec![0; 3]; // 和静态数组一样 初始化 3 个 0
+        //     //     //     println!("{:?}", arr3);
 
-            //     //     // 第四种
-            //     //     let arr4 = Vec::from([1, 2, 3]);
-            //     //     println!("{:?}", arr4);
-            //     // }
-            //     // 借用多个数组元素
-            //     // {
-            //     //     let mut arr1 = vec![1, 2, 3];
+        //     //     //     // 第四种
+        //     //     //     let arr4 = Vec::from([1, 2, 3]);
+        //     //     //     println!("{:?}", arr4);
+        //     //     // }
+        //     //     // 借用多个数组元素
+        //     //     // {
+        //     //     //     let mut arr1 = vec![1, 2, 3];
 
-            //     //     let val1 = &arr1[0];
+        //     //     //     let val1 = &arr1[0];
 
-            //     //     // 如果 val1 在 push 之后使用了 那么编译会报错 因为如果 push 了之后 数组的大小变了 这里是变大 当旧数组大小不够的时候 rust 会分配一块更大的内存 (2 倍大小) 那么原来的引用会指向一块无效的内存 应该不要发生这种事情 所以编译不通过
-            //     //     arr1.push(4);
+        //     //     //     // 如果 val1 在 push 之后使用了 那么编译会报错 因为如果 push 了之后 数组的大小变了 这里是变大 当旧数组大小不够的时候 rust 会分配一块更大的内存 (2 倍大小) 那么原来的引用会指向一块无效的内存 应该不要发生这种事情 所以编译不通过
+        //     //     //     arr1.push(4);
 
-            //     //     println!("{val1}");
-            //     // }
-            //     // 迭代
-            //     // {
-            //     //     let mut arr1 = vec![1, 2, 3];
+        //     //     //     println!("{val1}");
+        //     //     // }
+        //     //     // 迭代
+        //     //     // {
+        //     //     //     let mut arr1 = vec![1, 2, 3];
 
-            //     //     // for num in arr1 {
-            //     //     //     println!("{num}");
-            //     //     // }
-            //     //     // 可以修改元素
-            //     //     for num in &mut arr1 {
-            //     //         *num += 1;
-            //     //         println!("{num}");
-            //     //     }
-            //     // }
-            //     // 存储不同类型
-            //     // 数组默认存储的都必须是相同类型的元素
-            //     // 可以通过使用枚举和特征对象来实现存储不同类型
-            //     // {
-            //     //     // 通过枚举
-            //     //     // {
-            //     //     //     #[derive(Debug)]
-            //     //     //     enum Store {
-            //     //     //         String(String),
-            //     //     //         Number(i32),
-            //     //     //     }
+        //     //     //     // for num in arr1 {
+        //     //     //     //     println!("{num}");
+        //     //     //     // }
+        //     //     //     // 可以修改元素
+        //     //     //     for num in &mut arr1 {
+        //     //     //         *num += 1;
+        //     //     //         println!("{num}");
+        //     //     //     }
+        //     //     // }
+        //     //     // 存储不同类型
+        //     //     // 数组默认存储的都必须是相同类型的元素
+        //     //     // 可以通过使用枚举和特征对象来实现存储不同类型
+        //     //     // {
+        //     //     //     // 通过枚举
+        //     //     //     // {
+        //     //     //     //     #[derive(Debug)]
+        //     //     //     //     enum Store {
+        //     //     //     //         String(String),
+        //     //     //     //         Number(i32),
+        //     //     //     //     }
 
-            //     //     //     // 存储了两种不同的类型 都是属于 Store 枚举的成员
-            //     //     //     let arr1 = vec![Store::String("Hello".to_string()), Store::Number(1)];
+        //     //     //     //     // 存储了两种不同的类型 都是属于 Store 枚举的成员
+        //     //     //     //     let arr1 = vec![Store::String("Hello".to_string()), Store::Number(1)];
 
-            //     //     //     println!("{:?}", arr1);
+        //     //     //     //     println!("{:?}", arr1);
 
-            //     //     //     for t in arr1 {
-            //     //     //         println!("{:?}", t);
-            //     //     //     }
-            //     //     // }
-            //     //     // 通过特征对象
-            //     //     // {
-            //     //     //     trait Action {
-            //     //     //         fn say(&self);
-            //     //     //     }
+        //     //     //     //     for t in arr1 {
+        //     //     //     //         println!("{:?}", t);
+        //     //     //     //     }
+        //     //     //     // }
+        //     //     //     // 通过特征对象
+        //     //     //     // {
+        //     //     //     //     trait Action {
+        //     //     //     //         fn say(&self);
+        //     //     //     //     }
 
-            //     //     //     struct User;
-            //     //     //     impl Action for User {
-            //     //     //         fn say(&self) {
-            //     //     //             println!("ha");
-            //     //     //         }
-            //     //     //     }
+        //     //     //     //     struct User;
+        //     //     //     //     impl Action for User {
+        //     //     //     //         fn say(&self) {
+        //     //     //     //             println!("ha");
+        //     //     //     //         }
+        //     //     //     //     }
 
-            //     //     //     struct Animal;
-            //     //     //     impl Action for Animal {
-            //     //     //         fn say(&self) {
-            //     //     //             println!("wa");
-            //     //     //         }
-            //     //     //     }
+        //     //     //     //     struct Animal;
+        //     //     //     //     impl Action for Animal {
+        //     //     //     //         fn say(&self) {
+        //     //     //     //             println!("wa");
+        //     //     //     //         }
+        //     //     //     //     }
 
-            //     //     //     // 给 arr 显示指定数组元素类型为实现了 Action 特征的对象
-            //     //     //     let arr1: Vec<Box<dyn Action>> = vec![Box::new(User), Box::new(Animal)];
+        //     //     //     //     // 给 arr 显示指定数组元素类型为实现了 Action 特征的对象
+        //     //     //     //     let arr1: Vec<Box<dyn Action>> = vec![Box::new(User), Box::new(Animal)];
 
-            //     //     //     for t in arr1 {
-            //     //     //         t.say();
-            //     //     //     }
-            //     //     // }
-            //     // }
-            //     // 初始化数组时指定容量
-            //     // {
-            //     //     let mut v = Vec::with_capacity(5);
-            //     //     v.extend([1, 2, 3]);
+        //     //     //     //     for t in arr1 {
+        //     //     //     //         t.say();
+        //     //     //     //     }
+        //     //     //     // }
+        //     //     // }
+        //     //     // 初始化数组时指定容量
+        //     //     // {
+        //     //     //     let mut v = Vec::with_capacity(5);
+        //     //     //     v.extend([1, 2, 3]);
 
-            //     //     println!("{}, {}", v.len(), v.capacity());
+        //     //     //     println!("{}, {}", v.len(), v.capacity());
 
-            //     //     v.reserve(1); // 调整容量 在之前的基础上增加至少 xx 的容量
-            //     //     println!("{}, {}", v.len(), v.capacity());
-            //     // }
-            //     // 更多数组方法查阅文档
-            //     // 数组排序分为稳定和非稳定 (对于相等的元素 稳定不会重排 非稳定不保证这一点)
-            //     // 可以通过 derive 派生排序相关的特性给结构体 那么结构体也可以排序 前提是结构体的属性都必须实现了 Ord 特征
-            // }
-        }
+        //     //     //     v.reserve(1); // 调整容量 在之前的基础上增加至少 xx 的容量
+        //     //     //     println!("{}, {}", v.len(), v.capacity());
+        //     //     // }
+        //     //     // 更多数组方法查阅文档
+        //     //     // 数组排序分为稳定和非稳定 (对于相等的元素 稳定不会重排 非稳定不保证这一点)
+        //     //     // 可以通过 derive 派生排序相关的特性给结构体 那么结构体也可以排序 前提是结构体的属性都必须实现了 Ord 特征
+        //     // }
+        //     // HashMap 哈希映射
+        //     // {
+        //     //     // 没有在 rust 的 prelude 中 须要手动引入
+        //     //     use std::collections::HashMap;
+        //     //     // 创建
+        //     //     // {
+        //     //     //     let mut obj1 = HashMap::new(); // 通过 new 创建
+
+        //     //     //     obj1.insert('a', 1); // 通过 insert 插件数据 编译器自动推断出类型
+        //     //     // }
+        //     //     // 将 vec 转为 hashmap
+        //     //     // {
+        //     //     //     let arr1 = vec![('a', 1), ('b', 2)];
+        //     //     //     let obj1: HashMap<_, _> = arr1.into_iter().collect();
+
+        //     //     //     for item in obj1 {
+        //     //     //         println!("{:?}", item);
+        //     //     //     }
+        //     //     // }
+        //     //     // 所有权问题
+        //     //     // {
+        //     //     //     let name = String::from("Bob");
+        //     //     //     let mut obj1 = HashMap::new();
+
+        //     //     //     // obj1.insert(name, 1) // 这里把 name 的所有权转移
+        //     //     //     // println!("{}", name); // name 的所有权丢失
+
+        //     //     //     obj1.insert(&name, 1); // 这里获取了 name 的引用
+        //     //     //     println!("{}", name); // 这里的 name 没有丢失
+
+        //     //     //     // 必须确保 name 的生命周期和 hashmap 一样长
+        //     //     //     // 如果手动移除 name 则再次使用 obj1 就会报错
+        //     //     //     // std::mem::drop(name);
+
+        //     //     //     println!("{:?}", obj1);
+        //     //     // }
+        //     //     // 查询 更新
+        //     //     // {
+        //     //     //     let mut obj1 = HashMap::new();
+
+        //     //     //     obj1.insert('a', 1);
+
+        //     //     //     println!("{:?}", obj1.get(&'a')); // 通过 .get 取值 得到的是一个 Option 枚举
+
+        //     //     //     // 循环取值
+        //     //     //     for (k, v) in &obj1 {
+        //     //     //         println!("{}, {}", k, v);
+        //     //     //     }
+
+        //     //     //     // 更新 返回老值
+        //     //     //     let old_val = obj1.insert('a', 2);
+
+        //     //     //     println!("old a's value is {:?}", old_val); // Some(1)
+        //     //     //     println!("{:?}", obj1);
+
+        //     //     //     // 未查询到更新 查询到不做更新操作
+        //     //     //     let v1 = obj1.entry('a').or_insert(3);
+
+        //     //     //     println!("v1 is {:?}", v1);
+
+        //     //     //     let v2 = obj1.entry('b').or_insert(4);
+
+        //     //     //     println!("v2 is {:?}", v2);
+
+        //     //     //     *v2 = 5; // .or_insert 返回的是一个可变的引用 所以可以通过直接修改它来达到修改 hashmap 中的此值
+
+        //     //     //     println!("v2 is {:?}", v2); // 5
+
+        //     //     //     println!("{:?}", obj1); // 此时 'b': 5
+        //     //     // }
+        //     // }
+        // }
     }
 }
