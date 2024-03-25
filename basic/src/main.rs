@@ -2,6 +2,8 @@
 // use std::convert::TryInto;
 // use std::prelude;
 
+use core::panic;
+
 fn main() {
     // 解构
     // {
@@ -66,11 +68,11 @@ fn main() {
     // }
     // 单元类型
     // {
-    //     // () 零长度元祖就是一个单元类型, 比如函数不显示返回任何值/类型 那么它默认就返回单元类型
+    //     // () 零长度元祖就是一个单元类型，比如函数不显示返回任何值 / 类型 那么它默认就返回单元类型
     // }
     // 用不返回的发散函数
     // {
-    //     // 使用 ! 标识返回类型
+    //     // 使用！标识返回类型
     //     fn dead() -> ! {
     //         // 导致程序崩溃的代码
     //         loop {
@@ -84,7 +86,7 @@ fn main() {
     //     let b = &a;
 
     //     println!("{a},{b}");
-    //     assert_eq!(5, *b); // 解引用之后才能访问 b 所指向的值 然后进行比较. 不解引用的话 b 是个引用 不能与整型进行比较
+    //     assert_eq!(5, *b); // 解引用之后才能访问 b 所指向的值 然后进行比较。不解引用的话 b 是个引用 不能与整型进行比较
     // }
     // 字符串拼接
     // {
@@ -197,7 +199,7 @@ fn main() {
         // {
         //     #[derive(Debug)]
         //     enum Type {
-        //         Input(u8), // 类型也可以省略
+        //         Input (u8), // 类型也可以省略
         //         Checkbox { a: char },
         //         Radio(bool),
         //     }
@@ -208,11 +210,11 @@ fn main() {
 
         //     println!("{:?},{:?},{:?}", input, checkbox, radio);
         // }
-        // Option 枚举, 用来表示当前变量的值是缺失的, 用来代替 null
+        // Option 枚举，用来表示当前变量的值是缺失的，用来代替 null
         // {
         //     // 泛型 T
         //     enum Option<T> {
-        //         Some(T), // 含有值
+        //         Some (T), // 含有值
         //         None,    // 没有值
         //     }
 
@@ -232,7 +234,7 @@ fn main() {
         //         //     let arr2 = [2; 5]; // 重复出现 5 次 2
 
         //         //     println!("{}", arr1[0]);
-        //         //     // println!("{}", arr1[4]); // 不可以跨界访问数组元素
+        //         //     //println!("{}", arr1 [4]); // 不可以跨界访问数组元素
         //         //     println!("{:?}, {:?}", arr1, arr2);
         //         // }
         //         // 快速生成多个重复的复杂数据类型的元素
@@ -289,10 +291,10 @@ fn main() {
         //     //     //     let input = Type::Input;
 
         //     //     //     // 每条模式分支的返回值类型必须一致
-        //     //     //     // match 本身也是表达式 所以他的返回值可以赋值给其他变量 这里返回了一个单元类型
+        //     //     //     //match 本身也是表达式 所以他的返回值可以赋值给其他变量 这里返回了一个单元类型
         //     //     //     let res = match input {
         //     //     //         Type::Button => println!("Button"),
-        //     //     //         // xxx 或 xxx
+        //     //     //         //xxx 或 xxx
         //     //     //         Type::Input | Type::Radio => {
         //     //     //             println!("Input or Radio");
         //     //     //         }
@@ -325,7 +327,7 @@ fn main() {
         //     //     //     }
         //     //     // }
         //     // }
-        //     // if let 只匹配一个条件时使用
+        //     //if let 只匹配一个条件时使用
         //     // {
         //     //     let v = Some(3);
 
@@ -333,7 +335,7 @@ fn main() {
         //     //         println!("3");
         //     //     }
 
-        //     //     // 这里 x 为变量 (?可以理解为形参吗)
+        //     //     // 这里 x 为变量 (? 可以理解为形参吗)
         //     //     if let Some(x) = v {
         //     //         println!("3, {x}");
         //     //     }
@@ -343,7 +345,7 @@ fn main() {
         //     //         println!("3, {y}");
         //     //     }
         //     // }
-        //     // matches!宏 直接返回 true 或 false
+        //     //matches! 宏 直接返回 true 或 false
         //     // {
         //     //     let foo = 'A';
         //     //     let res1 = matches!(foo, 'a'..='z' | 'A'..='Z');
@@ -381,7 +383,7 @@ fn main() {
         //     //     stack.push(2);
         //     //     stack.push(3);
 
-        //     //     // stack.pop 从数组尾部弹出元素
+        //     //     //stack.pop 从数组尾部弹出元素
         //     //     while let Some(top) = stack.pop() {
         //     //         println!("{}", top);
         //     //     }
@@ -421,8 +423,8 @@ fn main() {
         //     //     let p = Point { x: 1, y: 9 };
 
         //     //     match p {
-        //     //         Point { x: 1, y } => println!("matched x = 1, y is {y}"), // 只匹配 x
-        //     //         Point { x: _, y: 2 } => println!("matched y = 2"),        // 只匹配 y
+        //     //         Point {x: 1, y} => println!("matched x = 1, y is {y}"), // 只匹配 x
+        //     //         Point {x: _, y: 2} => println!("matched y = 2"),        // 只匹配 y
         //     //         Point { x: _, y: __ } => println!("not matched anything"),
         //     //     }
         //     // }
@@ -519,13 +521,13 @@ fn main() {
         //     //         _ => println!("not ..."),
         //     //     }
         //     // }
-        //     // 使用下划线_加字母的变量 仍会被绑定值, 只使用下划线_则不会被绑定值 比如使用_绑定一个值的所有权 则原来的变量并不会丢失所有权.
+        //     // 使用下划线_加字母的变量 仍会被绑定值，只使用下划线_则不会被绑定值 比如使用_绑定一个值的所有权 则原来的变量并不会丢失所有权.
         //     // 匹配中的额外条件
         //     // {
         //     //     let num = Some(5);
 
         //     //     match num {
-        //     //         Some(x) if x > 4 => println!("x > 4"), // 模式中的额外 if 条件 更进一步匹配
+        //     //         Some (x) if x > 4 => println!("x > 4"), // 模式中的额外 if 条件 更进一步匹配
         //     //         _ => println!("not ..."),
         //     //     }
         //     // }
@@ -552,7 +554,7 @@ fn main() {
         //     //     //     let point = Point { x: 1, y: 2 };
 
         //     //     //     match point {
-        //     //     //         Point { x: x_var @ _, .. } => println!("{}", x_var), // 将 x 绑定到新变量 x_var 上
+        //     //     //         Point {x: x_var @ _, ..} => println!("{}", x_var), // 将 x 绑定到新变量 x_var 上
         //     //     //     }
         //     //     // }
         //     //     // {
@@ -570,7 +572,7 @@ fn main() {
         //     // }
         // }
         // method
-        // rust 中的方法往往跟 struct, enum, trait 一起使用
+        //rust 中的方法往往跟 struct, enum, trait 一起使用
         // {
         //     // 简单的方法
         //     struct Point {
@@ -578,9 +580,9 @@ fn main() {
         //         y: i32,
         //     }
 
-        //     // impl 关键字定义实现方法 并与 Point 相关联
+        //     //impl 关键字定义实现方法 并与 Point 相关联
         //     impl Point {
-        //         // self 是 Point 本身, 可以当作 js 中的 this 来理解
+        //         //self 是 Point 本身，可以当作 js 中的 this 来理解
         //         // 这里的 self 只是对 Point 的所有权的不可变借用
         //         fn sum(&self) -> i32 {
         //             self.x * self.y
@@ -590,7 +592,7 @@ fn main() {
         //     // 使用
         //     let p = Point { x: 1, y: 2 };
 
-        //     println!("sum {}", p.sum()); // 使用 sum 方法
+        //     println!("sum {}", p.sum ()); // 使用 sum 方法
         //     println!("x {}", p.x);
         // }
         // 私有属性
@@ -606,7 +608,7 @@ fn main() {
         //         // 这是一个关联函数 用作初始化当前结构体的实例 用 new 作为构造器名称是 rust 中约定俗成的规则
         //         // 大致可以用第一个参数是否是 self 来区分
         //         // 没有就是关联函数 有就是方法
-        //         // 通过::来调用
+        //         // 通过：：来调用
         //         pub fn new(x: i32, y: i32) -> Self {
         //             Point { x, y }
         //         }
@@ -617,7 +619,7 @@ fn main() {
 
         //         // 如果方法名和属性名同名 则一般用来实现 getter 访问器
         //         // 只将 getter 变为公有的 则外部就可以访问 并不可以进行修改 如果直接访问 Point.x 则会报错
-        //         // 方法可以通过::来调用 也可以实例化过后通过.来调用
+        //         // 方法可以通过：：来调用 也可以实例化过后通过。来调用
         //         pub fn x(&self) -> i32 {
         //             self.x
         //         }
@@ -627,9 +629,9 @@ fn main() {
         //     println!("{}", p1.x());
 
         //     Point::test();
-        //     println!("{}", Point::x(&p1)); // 这样调用则必须传入必要的参数
+        //     println!("{}", Point::x (&p1)); // 这样调用则必须传入必要的参数
 
-        //     let p2 = Point::new(2, 4); // 使用关联函数 new 来构造 初始化数据等
+        //     let p2 = Point::new (2, 4); // 使用关联函数 new 来构造 初始化数据等
         //     println!("{}", p2.x());
         // }
         // 所个 impl 块
@@ -672,7 +674,7 @@ fn main() {
         //     let c = Color::Rgb(1, 2, 3);
         //     c.value()
         // }
-        // 泛型 类似 ts 中泛型, 特征 类似 interface
+        // 泛型 类似 ts 中泛型，特征 类似 interface
         // {
         //     // {
         //     //     fn add<T: std::ops::Add<Output = T>>(x: T, y: T) -> T {
@@ -696,7 +698,7 @@ fn main() {
         //     //         }
         //     //     }
 
-        //     //     // const 针对值的泛型
+        //     //     //const 针对值的泛型
         //     //     // 这里的 N 是值的泛型 数来代替数组的长度 值的类型是 usize
         //     //     fn display_arr<T: std::fmt::Debug, const N: usize>(arr: [T; N]) {
         //     //         println!("{:?}", arr)
@@ -704,9 +706,9 @@ fn main() {
         //     //     let arr: [i32; 3] = [1, 2, 3];
         //     //     let arr: [i32; 2] = [1, 2];
 
-        //     //     // const 泛型表达式 where 在下面特征中有说明
+        //     //     //const 泛型表达式 where 在下面特征中有说明
         //     // }
-        //     // trait 特征
+        //     //trait 特征
         //     // 可以理解为定义特征就是 interface 接口 实现特征为继承接口
         //     // {
         //     //     // {
@@ -744,13 +746,13 @@ fn main() {
 
         //     //     //     println!("{:?}, {:?}", dog.barking(), cat.barking());
         //     //     // }
-        //     //     // 为 Â 实现 B 特征, 则他俩至少有一个是在当前作用域当中
+        //     //     // 为 Â 实现 B 特征，则他俩至少有一个是在当前作用域当中
         //     //     // 你可以为标准库中的类型实现你自定义的特征 也可以为你自定义的类型标准库中的特征 但是不可以为标准库中的类型实现标准库中的特征 因为他们都没在当前的作用域内
         //     //     // 特征中的默认实现方法和重载特征中的方法
         //     //     // {
         //     //     //     trait Action {
         //     //     //         // 默认实现
-        //     //     //         // 注意 想在实例化后通过.访问 就必须加上 &self 把函数作为方法
+        //     //     //         // 注意 想在实例化后通过。访问 就必须加上 &self 把函数作为方法
         //     //     //         fn barking(&self) {
         //     //     //             println!("HaHa");
         //     //     //         }
@@ -787,7 +789,7 @@ fn main() {
         //     //     //     trait Action {
         //     //     //         fn action1(&self);
         //     //     //         fn action2(&self) {
-        //     //     //             self.action1(); // 调用自身的 action1
+        //     //     //             self.action1 (); // 调用自身的 action1
         //     //     //         }
         //     //     //     }
 
@@ -855,7 +857,7 @@ fn main() {
 
         //     //     //     multi(&user);
 
-        //     //     //     // where 约束
+        //     //     //     //where 约束
         //     //     //     // 只是将泛型中的特征约束提取到 where 里
         //     //     //     {
         //     //     //         fn multi2<T, U>(p1: &T, p2: U)
@@ -884,7 +886,7 @@ fn main() {
         //     //     //     }
 
         //     //     //     impl<T: Display + PartialOrd> Pair<T> {
-        //     //     //         fn cmp_display(&self) { // 调用这个方法只有实现了 Display + PartialOrd 特征的值才可以
+        //     //     //         fn cmp_display (&self) { // 调用这个方法只有实现了 Display + PartialOrd 特征的值才可以
         //     //     //             if self.x >= self.y {
         //     //     //                 println!("The largest member is x = {}", self.x);
         //     //     //             } else {
@@ -926,10 +928,10 @@ fn main() {
         //     //     //         User
         //     //     //     }
         //     //     // }
-        //     //     // 可以通过 derive 为某个类型派生特定的特征, 这样这个类型就可以使用派生出来的方法等
+        //     //     // 可以通过 derive 为某个类型派生特定的特征，这样这个类型就可以使用派生出来的方法等
         //     //     // 如果想使用特征中的方法 可以将这个特征引入到当前作用域中
         //     //     // {
-        //     //     //     // use std::convert::TryInto; // 这个实际在最顶层引入 那样就不会报未使用的警告了
+        //     //     //     //use std::convert::TryInto; // 这个实际在最顶层引入 那样就不会报未使用的警告了
 
         //     //     //     let a: i32 = 10;
         //     //     //     let b: u16 = 100;
@@ -956,7 +958,7 @@ fn main() {
         //     //     //     impl<T: Add<T, Output = T>> Add for Point<T> {
         //     //     //         type Output = Point<T>;
 
-        //     //     //         // 这里是具体的相加实现 想通过 Point + Point 实现什么效果, 这里是把属性值 x 和 y 分别进行相加操作
+        //     //     //         // 这里是具体的相加实现 想通过 Point + Point 实现什么效果，这里是把属性值 x 和 y 分别进行相加操作
         //     //     //         fn add(self, point: Point<T>) -> Point<T> {
         //     //     //             Point {
         //     //     //                 x: self.x + point.x,
@@ -1039,7 +1041,7 @@ fn main() {
 
         //     //     //     v.action1();
         //     //     // }
-        //     //     // self 和 Self
+        //     //     //self 和 Self
         //     //     // 不是所有的特征都可以有特征对象
         //     //     // {
         //     //     //     // 这个特征就不能有特征对象 原因是他的 action1 方法的放回类型是 Self
@@ -1051,7 +1053,7 @@ fn main() {
         //     //     //     struct User;
 
         //     //     //     impl Action for User {
-        //     //     //         // self 指 User 实例化后的对象
+        //     //     //         //self 指 User 实例化后的对象
         //     //     //         // Self 指 User 类型
         //     //     //         fn action1(&self) -> Self {
         //     //     //             User
@@ -1097,7 +1099,7 @@ fn main() {
 
         //     //     //     // 这里又重新指定了泛型 T 的类型为 i32
         //     //     //     impl Action<i32> for User {
-        //     //     //         // val 的类型和新指定的泛型 T 的类型保持一致
+        //     //     //         //val 的类型和新指定的泛型 T 的类型保持一致
         //     //     //         fn action1(&self, val: i32) {
         //     //     //             println!("{}", val);
         //     //     //         }
@@ -1149,12 +1151,12 @@ fn main() {
 
         //     //     //     let user1 = User;
         //     //     //     // 调用方法
-        //     //     //     user1.action(); // 默认调用的是该类型中定义的方法 也就是 User
-        //     //     //     Swim::action(&user1); // 使用特征下的函数调用
+        //     //     //     user1.action (); // 默认调用的是该类型中定义的方法 也就是 User
+        //     //     //     Swim::action (&user1); // 使用特征下的函数调用
         //     //     //     Jump::action(&user1);
         //     //     //     // 调用关联函数
         //     //     //     User::action2();
-        //     //     //     <User as Swim>::action2(); // 使用 as 限定语法明确 User 是哪个特征
+        //     //     //     <User as Swim>::action2 (); // 使用 as 限定语法明确 User 是哪个特征
         //     //     //     <User as Jump>::action2();
         //     //     // }
         //     //     // 特征约束
@@ -1198,7 +1200,7 @@ fn main() {
         //     //     //         }
         //     //     //     }
 
-        //     //     //     // 通过 Deref 特征可以做一层类型转换 可以不必使用元祖.操作去获取元素, 还可以重载实现特征的类型的方法
+        //     //     //     // 通过 Deref 特征可以做一层类型转换 可以不必使用元祖。操作去获取元素，还可以重载实现特征的类型的方法
         //     //     // }
         //     // }
         // }
@@ -1209,7 +1211,7 @@ fn main() {
         //     //     // {
         //     //     //     // 创建动态数组
         //     //     //     // let mut arr1 = Vec::new();
-        //     //     //     // arr1.push(1); // 更新数组 如果 Vec 没有显示的指定类型 通过 push 编译期推断出 Vec 的类型是 i32
+        //     //     //     //arr1.push (1); // 更新数组 如果 Vec 没有显示的指定类型 通过 push 编译期推断出 Vec 的类型是 i32
 
         //     //     //     // println!("{:?}", arr1);
 
@@ -1217,7 +1219,7 @@ fn main() {
         //     //     //     let arr2 = vec![1, 2, 3];
 
         //     //     //     println!("{:?}", arr2);
-        //     //     //     println!("{}", arr2[1]); // 通过下标取值
+        //     //     //     println!("{}", arr2 [1]); // 通过下标取值
 
         //     //     //     // 使用 .get 取值 得到的是一个 Option 枚举 须要通过匹配处理值
         //     //     //     // 与下标直接取值不同的是 如果发生取值越界 .get 不会报错 下标取值就会报错
@@ -1316,7 +1318,7 @@ fn main() {
 
         //     //     //     println!("{}, {}", v.len(), v.capacity());
 
-        //     //     //     v.reserve(1); // 调整容量 在之前的基础上增加至少 xx 的容量
+        //     //     //     v.reserve (1); // 调整容量 在之前的基础上增加至少 xx 的容量
         //     //     //     println!("{}, {}", v.len(), v.capacity());
         //     //     // }
         //     //     // 更多数组方法查阅文档
@@ -1329,9 +1331,9 @@ fn main() {
         //     //     use std::collections::HashMap;
         //     //     // 创建
         //     //     // {
-        //     //     //     let mut obj1 = HashMap::new(); // 通过 new 创建
+        //     //     //     let mut obj1 = HashMap::new (); // 通过 new 创建
 
-        //     //     //     obj1.insert('a', 1); // 通过 insert 插件数据 编译器自动推断出类型
+        //     //     //     obj1.insert ('a', 1); // 通过 insert 插件数据 编译器自动推断出类型
         //     //     // }
         //     //     // 将 vec 转为 hashmap
         //     //     // {
@@ -1347,10 +1349,10 @@ fn main() {
         //     //     //     let name = String::from("Bob");
         //     //     //     let mut obj1 = HashMap::new();
 
-        //     //     //     // obj1.insert(name, 1) // 这里把 name 的所有权转移
-        //     //     //     // println!("{}", name); // name 的所有权丢失
+        //     //     //     //obj1.insert (name, 1) // 这里把 name 的所有权转移
+        //     //     //     //println!("{}", name); //name 的所有权丢失
 
-        //     //     //     obj1.insert(&name, 1); // 这里获取了 name 的引用
+        //     //     //     obj1.insert (&name, 1); // 这里获取了 name 的引用
         //     //     //     println!("{}", name); // 这里的 name 没有丢失
 
         //     //     //     // 必须确保 name 的生命周期和 hashmap 一样长
@@ -1365,7 +1367,7 @@ fn main() {
 
         //     //     //     obj1.insert('a', 1);
 
-        //     //     //     println!("{:?}", obj1.get(&'a')); // 通过 .get 取值 得到的是一个 Option 枚举
+        //     //     //     println!("{:?}", obj1.get (&'a')); // 通过 .get 取值 得到的是一个 Option 枚举
 
         //     //     //     // 循环取值
         //     //     //     for (k, v) in &obj1 {
@@ -1387,7 +1389,7 @@ fn main() {
 
         //     //     //     println!("v2 is {:?}", v2);
 
-        //     //     //     *v2 = 5; // .or_insert 返回的是一个可变的引用 所以可以通过直接修改它来达到修改 hashmap 中的此值
+        //     //     //     *v2 = 5; //.or_insert 返回的是一个可变的引用 所以可以通过直接修改它来达到修改 hashmap 中的此值
 
         //     //     //     println!("v2 is {:?}", v2); // 5
 
@@ -1404,9 +1406,9 @@ fn main() {
 
         //     //     //     {
         //     //     //         let b = 1;
-        //     //     //         // a = b; // 这里只是 copy 没有问题
+        //     //     //         //a = b; // 这里只是 copy 没有问题
         //     //     //         a = &b; // 如果这里是个引用 则会出现问题
-        //     //     //                 // b 在这个小的作用域离开后被释放 所以 a 引用了一个无效的引用
+        //     //     //                 //b 在这个小的作用域离开后被释放 所以 a 引用了一个无效的引用
         //     //     //     }
 
         //     //     //     println!("{}", a);
@@ -1456,7 +1458,7 @@ fn main() {
         //     //     let str3 = String::from("string3");
         //     //     {
         //     //         let str4 = String::from("string444");
-        //     //         let res2 = longest(str3.as_str(), str4.as_str()); // 返回值的生命周期和 str4 保持一致
+        //     //         let res2 = longest (str3.as_str (), str4.as_str ()); // 返回值的生命周期和 str4 保持一致
 
         //     //         println!("{}", res2);
         //     //     }
@@ -1520,7 +1522,7 @@ fn main() {
         //     //         name: &'a str,
         //     //     }
 
-        //     //     // impl 必须使用结构体完整名称 包括生命周期标注
+        //     //     //impl 必须使用结构体完整名称 包括生命周期标注
         //     //     // 这里根据生命周期消除三个条件 编译器会自动推断方法中的生命周期
         //     //     // impl<'a> User<'a> {
         //     //     //     fn return_name(&self, other: &str) -> &str {
@@ -1561,11 +1563,74 @@ fn main() {
         //     // }
         //     // 静态生命周期
         //     // {
-        //     //     // 通过 'static 标注
+        //     //     // 通过'static 标注
         //     //     // 表示这个生命周期活的和程序一样久 例如字符串字面量 (硬编码到二进制文件里)
         //     //     let name: &'static str = "John";
         //     //     println!("{}", name);
         //     // }
         // }
+        // 错误处理
+        {
+            // 可恢复错误 Result<T, E> 用户访问，操作等错误，会影响某个用户自身的操作进程 不会影响全局或系统的错误
+            {
+                use std::fs::File;
+                // {
+                //     let f = File::open("hello.txt");
+
+                //     match f {
+                //         Ok(file) => file,
+                //         Err(err) => {
+                //             panic!("打开文件发生错误 {}", err)
+                //         }
+                //     };
+                // }
+                // 处理不同类型的错误
+                // {
+                //     use std::io::ErrorKind;
+
+                //     let file_name = "hello.txt";
+                //     let f = File::open(file_name);
+
+                //     let f = match f {
+                //         Ok(file) => file,
+                //         Err(err) => match err.kind() {
+                //             ErrorKind::NotFound => match File::create(file_name) {
+                //                 Ok(fc) => fc,
+                //                 Err(e) => panic!("创建文件发生错误 {}", e),
+                //             },
+                //             _ => panic!("错误"),
+                //         },
+                //     };
+
+                //     println!("{:?}", f);
+                // }
+                // expect 处理错误
+                // {
+                //     // 与 unwrap 不同的是 expect 可以自定义错误信息
+                //     let file = File::open("hello2.txt").expect("打开文件错误");
+
+                //     println!("{:?}", file);
+                // }
+            }
+            // 不可恢复错误 panic! 全局或系统及的错误 程序崩溃 (数组越界等)
+            // {
+            //     // 被动触发
+            //     // {
+            //     //     let arr = vec![1, 2, 3];
+            //     //     println!("{}", arr[99]);
+            //     // }
+            //     // 主动触发
+            //     // {
+            //     //     panic!("错误");
+            //     // }
+            //     // 可以通过设置环境变量 RUST_BACKTRACE=1 用来回溯错误
+            //     //panic! 有两种终止模式 默认是展开栈 用来回溯错误信息等 另一种是直接终止 通过修改 Cargo.toml 文件
+            //     // Cargo.toml
+            //     // [profile.release]
+            //     // panic = 'abort'
+            //     // 如果 panic! 发生在主线程 那么程序会终止 发生在子线程 那么该线程会终止
+            //     // Result 枚举出错后调用 unwrap 也是报错后直接 panic!
+            // }
+        }
     }
 }
