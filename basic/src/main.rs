@@ -1572,46 +1572,46 @@ fn main() {
         // 错误处理
         {
             // 可恢复错误 Result<T, E> 用户访问，操作等错误，会影响某个用户自身的操作进程 不会影响全局或系统的错误
-            {
-                use std::fs::File;
-                // {
-                //     let f = File::open("hello.txt");
+            // {
+            //     use std::fs::File;
+            //     // {
+            //     //     let f = File::open("hello.txt");
 
-                //     match f {
-                //         Ok(file) => file,
-                //         Err(err) => {
-                //             panic!("打开文件发生错误 {}", err)
-                //         }
-                //     };
-                // }
-                // 处理不同类型的错误
-                // {
-                //     use std::io::ErrorKind;
+            //     //     match f {
+            //     //         Ok(file) => file,
+            //     //         Err(err) => {
+            //     //             panic!("打开文件发生错误 {}", err)
+            //     //         }
+            //     //     };
+            //     // }
+            //     // 处理不同类型的错误
+            //     // {
+            //     //     use std::io::ErrorKind;
 
-                //     let file_name = "hello.txt";
-                //     let f = File::open(file_name);
+            //     //     let file_name = "hello.txt";
+            //     //     let f = File::open(file_name);
 
-                //     let f = match f {
-                //         Ok(file) => file,
-                //         Err(err) => match err.kind() {
-                //             ErrorKind::NotFound => match File::create(file_name) {
-                //                 Ok(fc) => fc,
-                //                 Err(e) => panic!("创建文件发生错误 {}", e),
-                //             },
-                //             _ => panic!("错误"),
-                //         },
-                //     };
+            //     //     let f = match f {
+            //     //         Ok(file) => file,
+            //     //         Err(err) => match err.kind() {
+            //     //             ErrorKind::NotFound => match File::create(file_name) {
+            //     //                 Ok(fc) => fc,
+            //     //                 Err(e) => panic!("创建文件发生错误 {}", e),
+            //     //             },
+            //     //             _ => panic!("错误"),
+            //     //         },
+            //     //     };
 
-                //     println!("{:?}", f);
-                // }
-                // expect 处理错误
-                // {
-                //     // 与 unwrap 不同的是 expect 可以自定义错误信息
-                //     let file = File::open("hello2.txt").expect("打开文件错误");
+            //     //     println!("{:?}", f);
+            //     // }
+            //     // expect 处理错误
+            //     // {
+            //     //     // 与 unwrap 不同的是 expect 可以自定义错误信息
+            //     //     let file = File::open("hello2.txt").expect("打开文件错误");
 
-                //     println!("{:?}", file);
-                // }
-            }
+            //     //     println!("{:?}", file);
+            //     // }
+            // }
             // 不可恢复错误 panic! 全局或系统及的错误 程序崩溃 (数组越界等)
             // {
             //     // 被动触发
@@ -1631,6 +1631,39 @@ fn main() {
             //     // 如果 panic! 发生在主线程 那么程序会终止 发生在子线程 那么该线程会终止
             //     // Result 枚举出错后调用 unwrap 也是报错后直接 panic!
             // }
+            // 错误传播
+            {
+                // 函数方法等返回错误 在调用方处理
+                use std::fs::File;
+                {
+                    // let file = File::open("hello2.txt");
+                    // let file = match file {
+                    //     Ok(file) => file,
+                    //     Err(err) => return Err(err),
+                    // };
+
+                    fn read_username_from_file() -> Result<String, io::Error> {
+                        // 打开文件，f 是`Result<文件句柄,io::Error>`
+                        let f = File::open("hello.txt");
+
+                        let mut f = match f {
+                            // 打开文件成功，将 file 句柄赋值给 f
+                            Ok(file) => file,
+                            // 打开文件失败，将错误返回 (向上传播)
+                            Err(e) => return Err(e),
+                        };
+                        // 创建动态字符串 s
+                        let mut s = String::new();
+                        // 从 f 文件句柄读取数据并写入 s 中
+                        match f.read_to_string(&mut s) {
+                            // 读取成功，返回 Ok 封装的字符串
+                            Ok(_) => Ok(s),
+                            // 将错误向上传播
+                            Err(e) => Err(e),
+                        }
+                    }
+                }
+            }
         }
     }
 }
