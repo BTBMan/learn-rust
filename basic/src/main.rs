@@ -3,6 +3,7 @@
 // use std::prelude;
 
 use core::panic;
+use std::io::{self, Read};
 
 fn main() {
     // 解构
@@ -1662,6 +1663,7 @@ fn main() {
                             Err(e) => Err(e),
                         }
                     }
+                    read_username_from_file().unwrap();
                 }
             }
         }
