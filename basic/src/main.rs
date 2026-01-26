@@ -2,7 +2,7 @@
 // use std::convert::TryInto;
 // use std::prelude;
 
-use core::panic;
+// use core::panic;
 use std::io::{self, Read};
 
 fn main() {
