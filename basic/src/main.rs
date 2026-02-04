@@ -1346,7 +1346,7 @@ fn main() {
                 //     let arr2 = vec![1, 2, 3];
 
                 //     println!("{:?}", arr2);
-                //     println!("{}", arr2 [1]); // 通过下标取值
+                //     println!("{}", arr2[1]); // 通过下标取值
 
                 //     // 使用 .get 取值 得到的是一个 Option 枚举 须要通过匹配处理值
                 //     // 与下标直接取值不同的是 如果发生取值越界 .get 不会报错 下标取值就会报错
@@ -1366,19 +1366,19 @@ fn main() {
                 //     println!("{:?}", arr4);
                 // }
 
-                // 借用多个数组元素
+                // // 借用多个数组元素
                 // {
                 //     let mut arr1 = vec![1, 2, 3];
 
                 //     let val1 = &arr1[0];
 
-                //     // 如果 val1 在 push 之后使用了 那么编译会报错 因为如果 push 了之后 数组的大小变了 这里是变大 当旧数组大小不够的时候 rust 会分配一块更大的内存 (2 倍大小) 那么原来的引用会指向一块无效的内存 应该不要发生这种事情 所以编译不通过
+                //     // 如果 val1 在 push 之后使用了(在 push 之前使用是没问题的) 那么编译会报错 因为如果 push 了之后 数组的大小变了 这里是变大 当旧数组大小不够的时候 rust 会分配一块更大的内存 (2 倍大小) 那么原来的引用会指向一块无效的内存 应该不要发生这种事情 所以编译不通过
                 //     arr1.push(4);
 
                 //     println!("{val1}");
                 // }
 
-                // 迭代
+                // // 迭代
                 // {
                 //     let mut arr1 = vec![1, 2, 3];
 
@@ -1392,70 +1392,130 @@ fn main() {
                 //     }
                 // }
 
-                // 存储不同类型
-                // 数组默认存储的都必须是相同类型的元素
-                // 可以通过使用枚举和特征对象来实现存储不同类型
+                // // 存储不同类型
+                // // 数组默认存储的都必须是相同类型的元素
+                // // 可以通过使用枚举和特征对象来实现存储不同类型
                 // {
-                //     // 通过枚举
-                //     // {
-                //     //     #[derive(Debug)]
-                //     //     enum Store {
-                //     //         String(String),
-                //     //         Number(i32),
-                //     //     }
+                // // 通过枚举
+                // {
+                //     #[derive(Debug)]
+                //     enum Store {
+                //         String(String),
+                //         Number(i32),
+                //     }
 
-                //     //     // 存储了两种不同的类型 都是属于 Store 枚举的成员
-                //     //     let arr1 = vec![Store::String("Hello".to_string()), Store::Number(1)];
+                //     // 存储了两种不同的类型 都是属于 Store 枚举的成员
+                //     let arr1 = vec![Store::String("Hello".to_string()), Store::Number(1)];
 
-                //     //     println!("{:?}", arr1);
+                //     println!("{:?}", arr1);
 
-                //     //     for t in arr1 {
-                //     //         println!("{:?}", t);
-                //     //     }
-                //     // }
-                //     // 通过特征对象
-                //     // {
-                //     //     trait Action {
-                //     //         fn say(&self);
-                //     //     }
-
-                //     //     struct User;
-                //     //     impl Action for User {
-                //     //         fn say(&self) {
-                //     //             println!("ha");
-                //     //         }
-                //     //     }
-
-                //     //     struct Animal;
-                //     //     impl Action for Animal {
-                //     //         fn say(&self) {
-                //     //             println!("wa");
-                //     //         }
-                //     //     }
-
-                //     //     // 给 arr 显示指定数组元素类型为实现了 Action 特征的对象
-                //     //     let arr1: Vec<Box<dyn Action>> = vec![Box::new(User), Box::new(Animal)];
-
-                //     //     for t in arr1 {
-                //     //         t.say();
-                //     //     }
-                //     // }
+                //     for t in arr1 {
+                //         println!("{:?}", t);
+                //     }
                 // }
 
-                // 初始化数组时指定容量
+                // // 通过特征对象
                 // {
-                //     let mut v = Vec::with_capacity(5);
-                //     v.extend([1, 2, 3]);
+                //     trait Action {
+                //         fn say(&self);
+                //     }
 
-                //     println!("{}, {}", v.len(), v.capacity());
+                //     struct User;
+                //     impl Action for User {
+                //         fn say(&self) {
+                //             println!("ha");
+                //         }
+                //     }
 
-                //     v.reserve (1); // 调整容量 在之前的基础上增加至少 xx 的容量
-                //     println!("{}, {}", v.len(), v.capacity());
+                //     struct Animal;
+                //     impl Action for Animal {
+                //         fn say(&self) {
+                //             println!("wa");
+                //         }
+                //     }
+
+                //     // 给 arr 显示指定数组元素类型为实现了 Action 特征的对象
+                //     // let arr1: Vec<Box<dyn Action>> = vec![Box::new(User), Box::new(Animal)];
+                //     // 也可以通过 &dyn Xxx 的方式定义
+                //     let arr1: Vec<&dyn Action> = vec![&User, &Animal];
+
+                //     for t in arr1 {
+                //         t.say();
+                //     }
                 // }
-                // 更多数组方法查阅文档
-                // 数组排序分为稳定和非稳定 (对于相等的元素 稳定不会重排 非稳定不保证这一点)
-                // 可以通过 derive 派生排序相关的特性给结构体 那么结构体也可以排序 前提是结构体的属性都必须实现了 Ord 特征
             }
+
+            // // 初始化数组时指定容量
+            // {
+            //     let mut v = Vec::with_capacity(5);
+            //     v.extend([1, 2, 3]);
+
+            //     println!("{}, {}", v.len(), v.capacity());
+
+            //     v.reserve(1); // 调整容量 在之前的基础上增加至少 xx 的容量
+            //     println!("{}, {}", v.len(), v.capacity());
+            // }
+            // 更多数组方法查阅文档
+
+            // // 数组排序分为稳定和非稳定 (对于相等的元素 稳定不会重排 非稳定不保证这一点)
+            // {
+            //     let mut arr1 = vec![1, 5, 10, 2, 15];
+            //     arr1.sort_unstable();
+            //     println!("{:?}", arr1);
+
+            //     let mut arr2 = vec![1.0, 5.6, 10.3, 2.0, 15f32];
+            //     // arr2.sort_unstable(); // error, 浮点没有实现 Ord 特征, 只实现了 PartialOrd 特征
+            //     arr2.sort_unstable_by(|a, b| a.partial_cmp(b).unwrap());
+            //     println!("{:?}", arr2);
+            // }
+
+            // // 对结构体数组进行排序 (根据结构体中的某个属性)
+            // {
+            //     #[derive(Debug)]
+            //     struct User {
+            //         name: String,
+            //         age: u32,
+            //     }
+
+            //     impl User {
+            //         fn new(name: String, age: u32) -> User {
+            //             User { name, age }
+            //         }
+            //     }
+
+            //     let mut users = vec![
+            //         User::new("John".to_string(), 26),
+            //         User::new("Bob".to_string(), 30),
+            //         User::new("Alice".to_string(), 18),
+            //     ];
+            //     users.sort_unstable_by(|a, b| a.age.cmp(&b.age));
+            //     println!("{:?}", users);
+
+            // }
+
+            // // 可以通过 derive 派生排序相关的特性给结构体 那么结构体也可以排序 前提是结构体的属性都必须实现了 Ord 特征
+            // {
+            //     // 此时要保证结构体中的所有属性都实现了 Ord 相关的特征, 不然会报错
+            //     #[derive(Debug, Eq, PartialEq, PartialOrd, Ord)]
+            //     struct User {
+            //         name: String,
+            //         age: u32,
+            //     }
+
+            //     impl User {
+            //         fn new(name: String, age: u32) -> User {
+            //             User { name, age }
+            //         }
+            //     }
+
+            //     let mut users = vec![
+            //         User::new("John".to_string(), 26),
+            //         User::new("Bob".to_string(), 30),
+            //         User::new("Alice".to_string(), 18),
+            //     ];
+            //     users.sort_unstable();
+            //     println!("{:?}", users);
+            // }
 
             // HashMap 哈希映射
             // {
