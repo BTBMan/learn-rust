@@ -128,6 +128,7 @@ fn main() {
         // {
         //     let mut s = String::from("hello");
 
+        //     // 可以利用作用域来创建多个可变引用
         //     {
         //         let r2 = &mut s; // ok
         //         println!("{}", r2);
@@ -152,7 +153,7 @@ fn main() {
         //     let r1 = &s;
         //     let r2 = &s;
         //     println!("{},{}", r1, r2);
-        //     let r3 = &mut s; // ok, 因为再次之后r1 r2不再使用
+        //     let r3 = &mut s; // ok, 因为在此之后 r1 r2 不再使用
 
         //     println!("{}", r3);
         // }
@@ -263,6 +264,7 @@ fn main() {
             let slice = &a[0..1];
 
             println!("{}", { slice[0] }); // 1
+            println!("{}", slice[0]); // 1
         }
     }
 }

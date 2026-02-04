@@ -3,12 +3,12 @@
 // use std::prelude;
 
 // use core::panic;
-use std::{
-    ffi::{c_long, os_str::Display},
-    fmt::{self, write, Debug, Formatter},
-    io::{self, Read},
-    str::FromStr,
-};
+// use std::{
+//     ffi::{c_long, os_str::Display},
+//     fmt::{self, write, Debug, Formatter},
+//     io::{self, Read},
+//     str::FromStr,
+// };
 
 fn main() {
     // 解构
@@ -719,7 +719,7 @@ fn main() {
             //         a: T,
             //     }
 
-            //     // 方法中的泛型
+            //     // 方法中的泛型 此时要把 Struct1<T> 看作是一个整体, 而不是仅仅只是 Struct1
             //     impl<T> Struct1<T> {
             //         fn get_a<K: std::fmt::Display>(&self, other: K) -> &T {
             //             println!("{}", other);
@@ -730,8 +730,20 @@ fn main() {
             //     let s = Struct1 { a: 1 };
             //     println!("{}", s.get_a(2));
 
+            // 上面说的, 要把结构体加泛型看作一个整体, 这个例子就说明了, 只为 Struct1<i32> 的结构体实现了 x 方法
+            // impl Struct1<i32> {
+            //     fn x(&self) -> bool {
+            //         true
+            //     }
+            // }
+
+            // let user1 = Struct1 { a: "John" };
+            // // user1.x(); // user1 上没有 x 方法
+            // let user2 = Struct1 { a: 1 };
+            // user2.x(); // user2 上有
+
             //     //const 针对值的泛型
-            //     // 这里的 N 是值的泛型 数来代替数组的长度 值的类型是 usize
+            //     // 这里的 N 是值的泛型 用来代替数组的长度 值的类型是 usize
             //     fn display_arr<T: std::fmt::Debug, const N: usize>(arr: [T; N]) {
             //         println!("{:?}", arr)
             //     }
@@ -1139,7 +1151,7 @@ fn main() {
                 //         }
                 //     }
 
-                //     // fn return_trait2() -> &dyn Action { // error, 与声明周期有关
+                //     // fn return_trait2() -> &dyn Action { // error, 与生命周期有关
                 //     //     let is_user = true;
 
                 //     //     if is_user {
@@ -1518,345 +1530,489 @@ fn main() {
             // }
 
             // HashMap 哈希映射
+            {
+                // 没有在 rust 的 prelude 中 须要手动引入
+                // use std::collections::HashMap;
+
+                // // 创建
+                // {
+                //     let mut obj1 = HashMap::new(); // 通过 new 创建
+
+                //     obj1.insert('a', 1); // 通过 insert 插件数据 编译器自动推断出类型
+
+                //     for item in obj1 {
+                //         println!("{:?}", item);
+                //     }
+                // }
+
+                // // 将 vec 转为 hashmap
+                // {
+                //     let arr1 = vec![('a', 1), ('b', 2)];
+                //     let obj1: HashMap<_, _> = arr1.into_iter().collect();
+
+                //     for item in &obj1 {
+                //         println!("{:?}", item);
+                //     }
+
+                //     println!("{:?}", obj1.get(&'a'));
+                // }
+
+                // // 所有权问题
+                // {
+                //     let name = String::from("Bob");
+                //     let mut obj1 = HashMap::new();
+
+                //     //obj1.insert (name, 1) // 这里把 name 的所有权转移
+                //     //println!("{}", name); //name 的所有权丢失
+
+                //     obj1.insert (&name, 1); // 这里获取了 name 的引用
+                //     println!("{}", name); // 这里的 name 没有丢失
+
+                //     // 必须确保 name 的生命周期和 hashmap 一样长
+                //     // 如果手动移除 name 则再次使用 obj1 就会报错
+                //     // std::mem::drop(name);
+
+                //     println!("{:?}", obj1);
+                // }
+
+                // // 查询 更新
+                // {
+                //     let mut obj1 = HashMap::new();
+
+                //     obj1.insert('a', 1);
+
+                //     println!("{:?}", obj1.get(&'a')); // 通过 .get 取值 得到的是一个 Option 枚举
+
+                //     // 循环取值
+                //     println!("-- Get value in the loop -------------------");
+                //     for (k, v) in &obj1 {
+                //         println!("{}, {}", k, v);
+                //     }
+
+                //     // 直接取值
+                //     println!("-- Get value use copied and unwrap -------------------");
+                //     let v: i32 = obj1.get(&'a').copied().unwrap_or(0);
+                //     println!("{}", v);
+
+                //     println!("-- Update a ----------------------");
+                //     // 更新 返回老值
+                //     let old_val = obj1.insert('a', 2);
+
+                //     println!("old a's value is {:?}", old_val); // Some(1)
+                //     println!("{:?}", obj1);
+
+                //     println!("-- Search and update a ----------------------");
+                //     // 未查询到->更新 查询到->不做更新操作
+                //     let v1 = obj1.entry('a').or_insert(3);
+
+                //     println!("v1 is {:?}", v1);
+                //     println!("{:?}", obj1);
+
+                //     println!("-- Search and update b ----------------------");
+                //     let v2 = obj1.entry('b').or_insert(4);
+
+                //     println!("v2 is {:?}", v2);
+                //     // println!("{:?}", obj1);
+
+                //     println!("-- Modify v2's reference directly ----------------------");
+                //     *v2 = 5; //.or_insert 返回的是一个可变的引用 所以可以通过直接修改它来达到修改 hashmap 中的此值
+
+                //     println!("v2 is {:?}", v2); // 5
+
+                //     println!("{:?}", obj1); // 此时 'b': 5
+                // }
+            }
+        }
+
+        // 生命周期
+        {
+            // // 悬垂指针
             // {
-            //     // 没有在 rust 的 prelude 中 须要手动引入
-            //     use std::collections::HashMap;
-            //     // 创建
-            //     // {
-            //     //     let mut obj1 = HashMap::new (); // 通过 new 创建
+            //     {
+            //         let a;
 
-            //     //     obj1.insert ('a', 1); // 通过 insert 插件数据 编译器自动推断出类型
-            //     // }
-            //     // 将 vec 转为 hashmap
-            //     // {
-            //     //     let arr1 = vec![('a', 1), ('b', 2)];
-            //     //     let obj1: HashMap<_, _> = arr1.into_iter().collect();
+            //         {
+            //             let b = 1;
+            //             // a = b; // 这里只是 copy 没有问题
+            //             a = &b; // 如果这里是个引用 则会出现问题
+            //                     // b 在这个小的作用域离开后被释放 所以 a 引用了一个无效的引用
+            //         }
 
-            //     //     for item in obj1 {
-            //     //         println!("{:?}", item);
+            //         println!("{}", a);
+            //     }
+            //     {
+            //         // 如果作用域一样大就没有问题
+            //         let a;
+            //         let b = 1;
+            //         a = &b;
+
+            //         println!("{}", a);
+            //     }
+            // }
+
+            // // 函数中的生命周期
+            // {
+            //     // let str1 = String::from("string1");
+            //     // let str2 = "string222";
+
+            //     // let res1 = longest(str1.as_str(), str2);
+            //     // println!("{}", res1);
+
+            //     // 报错 因为函数不知道返回的是 a 还是 b 的引用
+            //     // 无法得知 a 和 b 的生命周期
+            //     // 无法知道返回值的生命周期和 a 和 b 的生命周期的关系
+            //     // 当存在多个引用时 编译器有时候也无法推导出生命周期
+            //     // fn longest(a: &str, b: &str) -> &str {
+            //     //     if a.len() > b.len() {
+            //     //         a
+            //     //     } else {
+            //     //         b
             //     //     }
             //     // }
-            //     // 所有权问题
+
+            //     // 生命周期标注
+            //     // 'a 标注 a 可以是任何字符 一般用 a
+            //     // 生命周期标注在引用符号后面 可变关键字前面 &'a mut &'a
+            //     // 只是告诉编译器多个引用之间的关系 并不会改变引种真实的生命周期
+            //     // 这里标注了参数 a 和 b 和返回值都和函数 longest 活的一样久 这样编译器就不会报错了
+            //     // 实际上返回值的生命周期与两个参数生命周期较小的那个一致
+            //     fn longest<'a>(a: &'a str, b: &'a str) -> &'a str {
+            //         if a.len() > b.len() {
+            //             a
+            //         } else {
+            //             b
+            //         }
+            //     }
+
             //     // {
-            //     //     let name = String::from("Bob");
-            //     //     let mut obj1 = HashMap::new();
+            //     //     let str3 = String::from("string3");
+            //     //     {
+            //     //         let str4 = String::from("string444");
+            //     //         let res2 = longest(str3.as_str(), str4.as_str()); // 返回值的生命周期和 str4 保持一致
 
-            //     //     //obj1.insert (name, 1) // 这里把 name 的所有权转移
-            //     //     //println!("{}", name); //name 的所有权丢失
-
-            //     //     obj1.insert (&name, 1); // 这里获取了 name 的引用
-            //     //     println!("{}", name); // 这里的 name 没有丢失
-
-            //     //     // 必须确保 name 的生命周期和 hashmap 一样长
-            //     //     // 如果手动移除 name 则再次使用 obj1 就会报错
-            //     //     // std::mem::drop(name);
-
-            //     //     println!("{:?}", obj1);
+            //     //         println!("{}", res2);
+            //     //     }
             //     // }
-            //     // 查询 更新
+
             //     // {
-            //     //     let mut obj1 = HashMap::new();
+            //     //     let str5 = String::from("string5");
+            //     //     let res;
+            //     //     {
+            //     //         let str6 = String::from("string666");
+            //     //         res = longest(str5.as_str(), str6.as_str()); // 编译器报错 str6 的生命周期比 str5 短 (str6 活的不够长)
 
-            //     //     obj1.insert('a', 1);
-
-            //     //     println!("{:?}", obj1.get (&'a')); // 通过 .get 取值 得到的是一个 Option 枚举
-
-            //     //     // 循环取值
-            //     //     for (k, v) in &obj1 {
-            //     //         println!("{}, {}", k, v);
+            //     //         println!("{}", res); // 这里是有效的
+            //     //                              // 当离开 str6 的作用域 res 也被释放
             //     //     }
 
-            //     //     // 更新 返回老值
-            //     //     let old_val = obj1.insert('a', 2);
-
-            //     //     println!("old a's value is {:?}", old_val); // Some(1)
-            //     //     println!("{:?}", obj1);
-
-            //     //     // 未查询到更新 查询到不做更新操作
-            //     //     let v1 = obj1.entry('a').or_insert(3);
-
-            //     //     println!("v1 is {:?}", v1);
-
-            //     //     let v2 = obj1.entry('b').or_insert(4);
-
-            //     //     println!("v2 is {:?}", v2);
-
-            //     //     *v2 = 5; //.or_insert 返回的是一个可变的引用 所以可以通过直接修改它来达到修改 hashmap 中的此值
-
-            //     //     println!("v2 is {:?}", v2); // 5
-
-            //     //     println!("{:?}", obj1); // 此时 'b': 5
+            //     //     // 报错 无法访问被释放的引用
+            //     //     println!("{}", res);
             //     // }
             // }
+
+            // // 结构体中的生命周期
+            // {
+            //     #[derive(Debug)]
+            //     struct User<'a> {
+            //         name: &'a str,
+            //         // name: &str,
+            //     }
+
+            //     #[derive(Debug)]
+            //     struct User2 {
+            //         name: i32,
+            //     }
+
+            //     let str1 = String::from("string1");
+            //     // 没问题 str1 的生命周期和 user1 的生命周期相等
+            //     let user1 = User {
+            //         name: str1.as_str(),
+            //     };
+
+            //     println!("{:?}", user1);
+
+            //     let user2;
+            //     let user3;
+            //     {
+            //         let str2 = String::from("string2");
+            //         user2 = User {
+            //             name: str2.as_str(),
+            //         };
+            //         user3 = User2 { name: 1 };
+
+            //         println!("{:?}", user2); // 同样这里是有效的
+            //     }
+
+            //     println!("{:?}", user2); // 这里报错 name 也就是 str2 在其内部作用域完成后被释放 那么 user2 内部存在一个无效引用
+            //     println!("{:?}", user3);
+            // }
+
+            // 生命周期消除满足三个条件
+            // 1. 为每个引用参数都获得独自的标注
+            // 2. 当只有一个输入生命周期 (一个引用参数) 的时候 那么返回值的生命周期都等于该输入生命周期
+            // 3. 当有多个输入生命周期 且有一个是 self, 则返回值的生命周期等于 self 生命周期
+
+            // // 方法中的生命周期
+            // {
+            //     struct User<'a> {
+            //         name: &'a str,
+            //     }
+
+            //     //impl 必须使用结构体完整名称 包括生命周期标注
+            //     // 这里根据生命周期消除三个条件 编译器会自动推断方法中的生命周期
+            //     // impl<'a> User<'a> {
+            //     //     fn return_name(&self, other: &str) -> &str {
+            //     //         println!("{}", other);
+            //     //         self.name
+            //     //     }
+            //     // }
+            //     // 完整的写法
+            //     // 满足生命周期消除条件一和条件三
+            //     // impl<'a> User<'a> {
+            //     //     fn return_name<'b>(&'a self, other: &'b str) -> &'a str {
+            //     //         println!("{}", other);
+            //     //         self.name
+            //     //     }
+            //     // }
+            //     // 手动指定不同的返回类型生命周期 'a -> 'b
+            //     // 如果返回的声明周期改为 'b, 那么一定要确定 'a 和 'b 的关系
+            //     // 因为这时候 User 的 生命周期已经被定义为 'a 了, 那么他的方法的参数的生命周期一定要小于等于 'a
+            //     // 否则如果 User 销毁了, 但方法的参数还存在一个活着的引用, 这会形成悬垂引用
+            //     // 那么就要约束 'b 的生命周期一定比 'a 短 否则就会出现悬垂引用 通过 'a: 'b 或通过 where 约束 和泛型一样
+            //     // impl<'a: 'b, 'b> User<'a> {
+            //     //     fn return_name(&'a self, other: &'b str) -> &'b str {
+            //     //         println!("{}", other);
+            //     //         self.name
+            //     //     }
+            //     // }
+
+            //     // 测试用的
+            //     // impl<'a, 'b, 'c: 'b> User<'c> {
+            //     //     fn return_name(&'a self, other: &'b str) -> &'b str {
+            //     //         println!("{}", other);
+            //     //         self.name
+            //     //     }
+            //     // }
+
+            //     // 通过 where 约束
+            //     impl<'a> User<'a> {
+            //         fn return_name<'b>(&'a self, other: &'b str) -> &'b str
+            //         where
+            //             'a: 'b,
+            //         {
+            //             println!("{}", other);
+            //             self.name
+            //         }
+            //     }
+
+            //     let user = User { name: "John" };
+
+            //     println!("{}", user.return_name("Hello"))
+            // }
+
+            // // 静态生命周期
+            // {
+            //     // 通过'static 标注
+            //     // 表示这个生命周期活的和程序一样久 例如字符串字面量 (硬编码到二进制文件里)
+            //     let name: &'static str = "John";
+            //     println!("{}", name);
+            // }
+
+            // {
+            //     use std::fmt::Display;
+
+            //     fn longest_with_an_announcement<'a, T>(x: &'a str, y: &'a str, ann: T) -> &'a str
+            //     where
+            //         T: Display,
+            //     {
+            //         println!("Announcement! {}", ann);
+            //         if x.len() > y.len() {
+            //             x
+            //         } else {
+            //             y
+            //         }
+            //     }
+
+            //     let str1 = String::from("value");
+            //     let str2 = String::from("value11111");
+            //     let ret = longest_with_an_announcement(&str1, &str2, "HaHaHaHaHaHa");
+            //     println!("{}", ret);
+            // }
         }
-        // 生命周期
-        // {
-        //     // 悬垂指针
-        //     // {
-        //     //     // {
-        //     //     //     let a;
 
-        //     //     //     {
-        //     //     //         let b = 1;
-        //     //     //         //a = b; // 这里只是 copy 没有问题
-        //     //     //         a = &b; // 如果这里是个引用 则会出现问题
-        //     //     //                 //b 在这个小的作用域离开后被释放 所以 a 引用了一个无效的引用
-        //     //     //     }
-
-        //     //     //     println!("{}", a);
-        //     //     // }
-        //     //     // {
-        //     //     //     // 如果作用域一样大就没有问题
-        //     //     //     let a;
-        //     //     //     let b = 1;
-        //     //     //     a = &b;
-
-        //     //     //     println!("{}", a);
-        //     //     // }
-        //     // }
-        //     // 函数中的生命周期
-        //     // {
-        //     //     let str1 = String::from("string1");
-        //     //     let str2 = "string222";
-
-        //     //     let res1 = longest(str1.as_str(), str2);
-        //     //     println!("{}", res1);
-
-        //     //     // 报错 因为函数不知道返回的是 a 还是 b 的引用
-        //     //     // 无法得知 a 和 b 的生命周期
-        //     //     // 无法知道返回值的生命周期和 a 和 b 的生命周期的关系
-        //     //     // 当存在多个引用时 编译器有时候也无法推导出生命周期
-        //     //     // fn longest(a: &str, b: &str) -> &str {
-        //     //     //     if a.len() > b.len() {
-        //     //     //         a
-        //     //     //     } else {
-        //     //     //         b
-        //     //     //     }
-        //     //     // }
-        //     //     // 生命周期标注
-        //     //     // 'a 标注 a 可以是任何字符 一般用 a
-        //     //     // 生命周期标注在引用符号后面 可变关键字前面 &'a mut &'a
-        //     //     // 只是告诉编译器多个引用之间的关系 并不会改变引种真实的生命周期
-        //     //     // 这里标注了参数 a 和 b 和返回值都和函数 longest 活的一样久 这样编译器就不会报错了
-        //     //     // 实际上返回值的生命周期与两个参数生命周期较小的那个一致
-        //     //     fn longest<'a>(a: &'a str, b: &'a str) -> &'a str {
-        //     //         if a.len() > b.len() {
-        //     //             a
-        //     //         } else {
-        //     //             b
-        //     //         }
-        //     //     }
-
-        //     //     let str3 = String::from("string3");
-        //     //     {
-        //     //         let str4 = String::from("string444");
-        //     //         let res2 = longest (str3.as_str (), str4.as_str ()); // 返回值的生命周期和 str4 保持一致
-
-        //     //         println!("{}", res2);
-        //     //     }
-
-        //     //     let str5 = String::from("string5");
-        //     //     let res;
-        //     //     {
-        //     //         let str6 = String::from("string666");
-        //     //         res = longest(str5.as_str(), str6.as_str());
-
-        //     //         println!("{}", res); // 这里是有效的
-        //     //                              // 当离开 str6 的作用域 res 也被释放
-        //     //     }
-
-        //     //     // 报错 无法访问被释放的引用
-        //     //     println!("{}", res);
-        //     // }
-        //     // 结构体中的生命周期
-        //     // {
-        //     //     #[derive(Debug)]
-        //     //     struct User<'a> {
-        //     //         name: &'a str,
-        //     //         // name: &str,
-        //     //     }
-
-        //     //     #[derive(Debug)]
-        //     //     struct User2 {
-        //     //         name: i32,
-        //     //     }
-
-        //     //     let str1 = String::from("string1");
-        //     //     // 没问题 str1 的生命周期和 user1 的生命周期相等
-        //     //     let user1 = User {
-        //     //         name: str1.as_str(),
-        //     //     };
-
-        //     //     println!("{:?}", user1);
-
-        //     //     let user2;
-        //     //     let user3;
-        //     //     {
-        //     //         let str2 = String::from("string2");
-        //     //         user2 = User {
-        //     //             name: str2.as_str(),
-        //     //         };
-        //     //         user3 = User2 { name: 1 };
-
-        //     //         println!("{:?}", user2); // 同样这里是有效的
-        //     //     }
-
-        //     //     println!("{:?}", user2); // 这里报错 name 也就是 str2 在其内部作用域完成后被释放 那么 user2 内部存在一个无效引用
-        //     //     println!("{:?}", user3);
-        //     // }
-        //     // 生命周期消除满足三个条件
-        //     // 1. 为每个引用参数都获得独自的标注
-        //     // 2. 当只有一个输入生命周期 (一个引用参数) 的时候 那么返回值的生命周期都等于该输入生命周期
-        //     // 3. 当有多个输入生命周期 且有一个是 self, 则返回值的生命周期等于 self 生命周期
-        //     // 方法中的生命周期
-        //     // {
-        //     //     struct User<'a> {
-        //     //         name: &'a str,
-        //     //     }
-
-        //     //     //impl 必须使用结构体完整名称 包括生命周期标注
-        //     //     // 这里根据生命周期消除三个条件 编译器会自动推断方法中的生命周期
-        //     //     // impl<'a> User<'a> {
-        //     //     //     fn return_name(&self, other: &str) -> &str {
-        //     //     //         println!("{}", other);
-        //     //     //         self.name
-        //     //     //     }
-        //     //     // }
-        //     //     // 完整的写法
-        //     //     // 满足生命周期消除条件一和条件三
-        //     //     // impl<'a> User<'a> {
-        //     //     //     fn return_name<'b>(&'a self, other: &'b str) -> &'a str {
-        //     //     //         println!("{}", other);
-        //     //     //         self.name
-        //     //     //     }
-        //     //     // }
-        //     //     // 手动指定不同的返回类型生命周期 'a -> 'b
-        //     //     // 那么就要约束 'b 的生命周期一定比 'a 短 否则就会出现悬垂引用 通过 'a: 'b 或通过 where 约束 和泛型一样
-        //     //     // impl<'a: 'b, 'b> User<'a> {
-        //     //     //     fn return_name(&'a self, other: &'b str) -> &'b str {
-        //     //     //         println!("{}", other);
-        //     //     //         self.name
-        //     //     //     }
-        //     //     // }
-        //     //     // 通过 where 约束
-        //     //     impl<'a> User<'a> {
-        //     //         fn return_name<'b>(&'a self, other: &'b str) -> &'b str
-        //     //         where
-        //     //             'a: 'b,
-        //     //         {
-        //     //             println!("{}", other);
-        //     //             self.name
-        //     //         }
-        //     //     }
-
-        //     //     let user = User { name: "John" };
-
-        //     //     println!("{}", user.return_name("Hello"))
-        //     // }
-        //     // 静态生命周期
-        //     // {
-        //     //     // 通过'static 标注
-        //     //     // 表示这个生命周期活的和程序一样久 例如字符串字面量 (硬编码到二进制文件里)
-        //     //     let name: &'static str = "John";
-        //     //     println!("{}", name);
-        //     // }
-        // }
         // 错误处理
         {
             // 可恢复错误 Result<T, E> 用户访问，操作等错误，会影响某个用户自身的操作进程 不会影响全局或系统的错误
-            // {
-            //     use std::fs::File;
-            //     // {
-            //     //     let f = File::open("hello.txt");
+            // 不可恢复错误 panic
+            {
 
-            //     //     match f {
-            //     //         Ok(file) => file,
-            //     //         Err(err) => {
-            //     //             panic!("打开文件发生错误 {}", err)
-            //     //         }
-            //     //     };
-            //     // }
-            //     // 处理不同类型的错误
-            //     // {
-            //     //     use std::io::ErrorKind;
+                // {
+                //     use std::fs::File;
+                //     let f = File::open("hello.txt");
 
-            //     //     let file_name = "hello.txt";
-            //     //     let f = File::open(file_name);
+                //     match f {
+                //         Ok(file) => file,
+                //         Err(err) => {
+                //             panic!("打开文件发生错误 {}", err)
+                //         }
+                //     };
+                // }
 
-            //     //     let f = match f {
-            //     //         Ok(file) => file,
-            //     //         Err(err) => match err.kind() {
-            //     //             ErrorKind::NotFound => match File::create(file_name) {
-            //     //                 Ok(fc) => fc,
-            //     //                 Err(e) => panic!("创建文件发生错误 {}", e),
-            //     //             },
-            //     //             _ => panic!("错误"),
-            //     //         },
-            //     //     };
+                // // 处理不同类型的错误
+                // {
+                //     use std::io::ErrorKind;
+                //     use std::fs::File;
 
-            //     //     println!("{:?}", f);
-            //     // }
-            //     // expect 处理错误
-            //     // {
-            //     //     // 与 unwrap 不同的是 expect 可以自定义错误信息
-            //     //     let file = File::open("hello2.txt").expect("打开文件错误");
+                //     let file_name = "hello.txt";
+                //     let f = File::open(file_name);
 
-            //     //     println!("{:?}", file);
-            //     // }
-            // }
+                //     let f = match f {
+                //         Ok(file) => file,
+                //         Err(err) => match err.kind() {
+                //             ErrorKind::NotFound => match File::create(file_name) {
+                //                 Ok(fc) => fc,
+                //                 Err(e) => panic!("创建文件发生错误 {}", e),
+                //             },
+                //             _ => panic!("错误"),
+                //         },
+                //     };
+
+                //     println!("{:?}", f);
+                // }
+
+                // // unwrap 处理
+                // {
+                //     use std::net::IpAddr;
+                //     // 试图将字符床解析成 ip 地址, 返回 Result
+                //     // 使用 unwrap 处理, 成功则返回解析后的地址, 失败则 panic
+                //     let ip: IpAddr = "127.0.0.1".parse().unwrap();
+                //     println!("{}", ip);
+                // }
+
+                // // expect 处理错误
+                // {
+                //     use std::fs::File;
+
+                //     // 与 unwrap 不同的是 expect 可以自定义错误信息
+                //     let file = File::open("hello2.txt").expect("打开文件错误");
+
+                //     println!("{:?}", file);
+                // }
+            }
+
             // 不可恢复错误 panic! 全局或系统及的错误 程序崩溃 (数组越界等)
-            // {
-            //     // 被动触发
-            //     // {
-            //     //     let arr = vec![1, 2, 3];
-            //     //     println!("{}", arr[99]);
-            //     // }
-            //     // 主动触发
-            //     // {
-            //     //     panic!("错误");
-            //     // }
-            //     // 可以通过设置环境变量 RUST_BACKTRACE=1 用来回溯错误
-            //     //panic! 有两种终止模式 默认是展开栈 用来回溯错误信息等 另一种是直接终止 通过修改 Cargo.toml 文件
-            //     // Cargo.toml
-            //     // [profile.release]
-            //     // panic = 'abort'
-            //     // 如果 panic! 发生在主线程 那么程序会终止 发生在子线程 那么该线程会终止
-            //     // Result 枚举出错后调用 unwrap 也是报错后直接 panic!
-            // }
+            {
+                // 被动触发
+                // {
+                //     let arr = vec![1, 2, 3];
+                //     println!("{}", arr[99]);
+                // }
+
+                // 主动触发
+                // {
+                //     panic!("错误");
+                // }
+
+                // 可以通过设置环境变量 RUST_BACKTRACE=1 用来回溯错误
+                // panic! 有两种终止模式 默认是展开栈 用来回溯错误信息等 另一种是直接终止 通过修改 Cargo.toml 文件
+                // Cargo.toml
+                // [profile.release]
+                // panic = 'abort'
+                // 如果 panic! 发生在主线程 那么程序会终止 发生在子线程 那么该线程会终止
+                // Result 枚举出错后调用 unwrap 也是报错后直接 panic!
+            }
+
             // 错误传播
-            // {
-            //     // 函数方法等返回错误 在调用方处理
-            //     use std::fs::File;
-            //     {
-            //         // let file = File::open("hello2.txt");
-            //         // let file = match file {
-            //         //     Ok(file) => file,
-            //         //     Err(err) => return Err(err),
-            //         // };
+            {
+                // // 函数方法等返回错误 在调用方处理
+                // {
+                //     use std::fs::File;
+                //     use std::io::{Error, Read};
 
-            //         fn read_username_from_file() -> Result<String, io::Error> {
-            //             // 打开文件，f 是`Result<文件句柄,io::Error>`
-            //             let f = File::open("hello.txt");
+                //     // let file = File::open("hello2.txt");
+                //     // let file = match file {
+                //     //     Ok(file) => file,
+                //     //     Err(err) => return Err(err),
+                //     // };
 
-            //             let mut f = match f {
-            //                 // 打开文件成功，将 file 句柄赋值给 f
-            //                 Ok(file) => file,
-            //                 // 打开文件失败，将错误返回 (向上传播)
-            //                 Err(e) => return Err(e),
-            //             };
-            //             // 创建动态字符串 s
-            //             let mut s = String::new();
-            //             // 从 f 文件句柄读取数据并写入 s 中
-            //             match f.read_to_string(&mut s) {
-            //                 // 读取成功，返回 Ok 封装的字符串
-            //                 Ok(_) => Ok(s),
-            //                 // 将错误向上传播
-            //                 Err(e) => Err(e),
-            //             }
-            //         }
-            //         read_username_from_file().unwrap();
-            //     }
-            // }
+                //     fn read_username_from_file() -> Result<String, Error> {
+                //         // 打开文件，f 是`Result<文件句柄,io::Error>`
+                //         let f = File::open("hello.txt");
+
+                //         let mut f = match f {
+                //             // 打开文件成功，将 file 句柄赋值给 f
+                //             Ok(file) => file,
+                //             // 打开文件失败，将错误返回 (向上传播)
+                //             Err(e) => return Err(e),
+                //         };
+
+                //         // 创建动态字符串 s
+                //         let mut s = String::new();
+
+                //         // 从 f 文件句柄读取数据并写入 s 中
+                //         match f.read_to_string(&mut s) {
+                //             // 读取成功，返回 Ok 封装的字符串
+                //             Ok(_) => Ok(s),
+                //             // 将错误向上传播
+                //             Err(e) => Err(e),
+                //         }
+                //     }
+
+                //     let ret: String = read_username_from_file().unwrap();
+                //     println!("{}", ret);
+                // }
+
+                // // 使用 ? 宏来传播错误
+                // // 省去写过多的 match
+                // {
+                //     use std::fs::File;
+                //     use std::io::Error;
+
+                //     fn read_username_from_file() -> Result<String, Error> {
+                //         let mut f = File::open("hello.txt")?;
+                //         let mut s = String::new();
+                //         f.read_to_string(&mut s)?;
+                //         Ok(s)
+                //     }
+                //     let ret: String = read_username_from_file().unwrap();
+                //     println!("{}", ret);
+                // }
+
+                // // 链式调用
+                // {
+                //     use std::fs::File;
+                //     use std::io::Error;
+
+                //     fn read_username_from_file() -> Result<String, Error> {
+                //         let mut s = String::new();
+                //         File::open("hello.txt")?.read_to_string(&mut s)?;
+
+                //         let r = if s.is_empty() {
+                //             String::from("Is empty!!")
+                //         } else {
+                //             s
+                //         };
+
+                //         Ok(r)
+                //     }
+
+                //     let ret: String = read_username_from_file().unwrap();
+                //     print!("{}", ret);
+                // }
+
+                // // 更少的代码量
+                // {
+                //     use std::fs;
+                //     use std::io::Error;
+
+                //     fn read_username_from_file() -> Result<String, Error> {
+                //         fs::read_to_string("hello.txt")
+                //     }
+
+                //     let ret: String = read_username_from_file().unwrap();
+                //     println!("{}", ret);
+                // }
+            }
         }
     }
 }
