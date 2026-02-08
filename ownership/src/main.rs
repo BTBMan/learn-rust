@@ -102,6 +102,44 @@ fn main() {
         // }
 
         // {
+        //     let mut v = vec![1, 2, 3];
+        //     let n = &v[0];
+        //     give_and_take(&mut v, 4);
+        //     println!("{n}");
+
+        //     fn give_and_take(v: &mut Vec<i32>, n: i32) -> i32 {
+        //         v.push(n);
+        //         v.remove(0)
+        //     }
+        // }
+
+        // {
+        //     let mut v = vec![String::from("value")];
+        //     let n = &v[0];
+        //     give_and_take(&mut v);
+        //     println!("{n}");
+
+        //     fn give_and_take(v: &mut Vec<String>) -> String {
+        //         v.push(String::from("value2"));
+        //         let full = v.join(" ");
+        //         full
+        //     }
+        // }
+
+        // {
+        //     let mut name: Vec<String> = vec![String::from("Ferris")];
+        //     let first: &String = &name[0];
+        //     stringify_name_with_title(&mut name);
+        //     println!("{}", first);
+
+        //     fn stringify_name_with_title(name: &mut Vec<String>) -> String {
+        //         name.push(String::from("Esq."));
+        //         let full: String = name.join(" ");
+        //         full
+        //     }
+        // }
+
+        // {
         //     // 可变引用
         //     let mut s1 = String::from("hello");
         //     println!("{s1}");
