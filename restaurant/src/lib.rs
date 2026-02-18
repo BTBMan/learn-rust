@@ -123,6 +123,7 @@ pub mod a {
     }
 
     pub mod bb {
+        #[allow(dead_code)]
         pub(in crate::a) fn g() {}
 
         // 使用 pub(self) 定义 item 只在当前模块内可见
@@ -140,6 +141,7 @@ pub mod a {
     }
 }
 
+#[allow(dead_code)]
 fn test() {
     // a::bb::e(); // error, e 只能在 mod a 中使用
     // a::bb::g(); // error, g 只能在 mod a 中使用
