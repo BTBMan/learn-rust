@@ -10,7 +10,10 @@
 //     str::FromStr,
 // };
 
+mod unsafe_code;
+
 fn main() {
+    unsafe_code::main();
     // 解构
     // {
     //     let (a, mut b) = (true, false);
