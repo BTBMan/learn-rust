@@ -10,10 +10,12 @@
 //     str::FromStr,
 // };
 
+mod global_var;
 mod unsafe_code;
 
 fn main() {
     unsafe_code::main();
+    global_var::main();
     // 解构
     // {
     //     let (a, mut b) = (true, false);
