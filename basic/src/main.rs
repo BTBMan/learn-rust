@@ -11,11 +11,13 @@
 // };
 
 mod global_var;
+mod offset;
 mod unsafe_code;
 
 fn main() {
     unsafe_code::main();
     global_var::main();
+    offset::main();
     // 解构
     // {
     //     let (a, mut b) = (true, false);
