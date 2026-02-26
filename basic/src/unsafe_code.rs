@@ -24,6 +24,7 @@ pub fn main() {
     //     let r2 = &mut num as *mut i32;
 
     //     // 基于内存创建裸指针不安全
+    //     // 要保证 0x012345 确实指向一个有效的值
     //     let address = 0x012345usize;
     //     let _r3 = address as *const i32; // 不安全的
 
@@ -39,6 +40,52 @@ pub fn main() {
     //     let a = Box::new(5); // a->pointer->5
     //     let _r1 = &*a as *const i32; // 首先解引用 a, 然后创建裸指针
     //     let _r2 = Box::into_raw(a); // 通过 into_raw 转换为裸指针
+    // }
+
+    // // 错误写法
+    // {
+    //     let num = 5;
+
+    //     // 错误, 这里直接把 5 当作地址引用了
+    //     // 解引用会报错
+    //     let r1 = num as *const i32;
+
+    //     // 对的, 这里把 num 的引用(内存地址)转换为裸指针
+    //     // 这样解引用后, 得到的是 5
+    //     // 除非 num 已经是指针或 usize 时才可以这么用
+    //     let r2 = &num as *const i32;
+
+    //     println!("{r1:?}"); // 0x5
+    //     println!("{r2:?}"); // 0x16b1fa104
+
+    //     unsafe {
+    //         println!("{}", *r1); // 5
+    //         println!("{}", *r2); // Error
+    //     }
+    // }
+
+    // // 新版写法
+    // // 新版写法不需要隐晦创建一个临时的引用 &T, 而旧版会这么做(先借用再转换), 新版"直接取原生地址"
+    // // 由于引用必须要对齐 (alignment), 所以旧版可能存在引用未对齐的数据而报错, 比如:
+    // 一个 packed(压缩的) struct, 其中一个字段类型是 u32(4字节), 由于压缩的缘故, 导致读取的字段并不是 u32 类型, 所以就导致报错
+    // {
+    //     let mut num = 5;
+
+    //     // 使用 &raw const 或 &raw mut 来从语法层面告诉编译器这是个裸指针, 不要把它当作引用
+    //     // 前者是不可变, 后者是可变的
+    //     let r1: *const i32 = &raw const num;
+    //     let r2: *mut i32 = &raw mut num;
+
+    //     // 可以不显示声明类型, 编译器自己会推断出来
+    //     let _r3 = &raw const num;
+
+    //     println!("{r1:?}");
+    //     println!("{r2:?}");
+
+    //     unsafe {
+    //         println!("{:?}", *r1);
+    //         println!("{:?}", *r2);
+    //     }
     // }
 
     // // 调用不安全的函数
