@@ -1,5 +1,6 @@
 pub fn main() {
     {
+        #[allow(dead_code)]
         #[derive(Debug)]
         pub struct Address {
             value: u64, // 对齐要求 = 8
